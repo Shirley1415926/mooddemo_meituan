@@ -104,3 +104,11 @@ node --check public/app.js
 ### 猫咪短互动动画
 
 互动区使用两套 4×2 透明角色动作图（`assets/apricot-actions.png`、`assets/silver-actions.png`），由内置 image_gen 生成：同一大眼睛卡通猫，依次为待机、左右蹭头、低头吃/舔嘴、抬爪/推球、蜷睡；银灰版仅替换毛色，保留全部姿势和位置。点击播放 4 帧、每帧 500ms，共约 2 秒后恢复待机；重复点击取消前一个动作，离开页面清理计时器。无暂停按钮，无循环待机动画；减少动态效果时仅展示对应静态姿势后恢复。
+
+### 悬浮陪伴与交互动效
+
+- 已认养的猫咪在各页面边缘陪伴，可点击展开摸头/回小屋菜单，可收起为侧边入口，设置仅本机保存。手机避开底部导航；输入和弹窗期间隐藏，减少遮挡。
+- 每 22–40 秒可能做一次约 1.2 秒的小动作，不记录成长、不发提醒；页面隐藏、主动收起或系统减少动态效果时不主动播放。
+- 小屋使用独立背景与角色层，可直接点击猫咪摸头。新增 `assets/room-background.jpg` 由内置 image_gen 编辑原卡通图，提示为：remove only the cat and reconstruct the empty sage cushion; preserve room, window, plant, bowl, ball, palette and composition; no animals or text.
+- 页面切换 230ms，桌面弹窗进入 260ms、退出 160ms，手机底部弹层进入 280ms；重开弹窗会取消尚未结束的关闭操作。尊重系统减少动态效果设置。
+- 参考：Finch 官方产品 https://finchcare.com/ （角色作为陪伴入口）；Material Duration & easing https://m1.material.io/motion/duration-easing.html （短过渡、自然减速和进入/退出时长差异）。未复用其他产品的角色或素材。
