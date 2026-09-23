@@ -23,6 +23,7 @@ function sendSupportChat(text){text=text.trim().slice(0,500);if(!text)return;let
  else if(prior==='sad')reply='接着你刚才提到的难过，我想多听一点这件事对你的意义。你更在意发生了什么，还是自己当时没有被理解？';
  else if(prior==='pressure')reply='你刚才说到那些压力。先不急着解决，哪一部分是你希望别人知道、却还没说出来的？';
  else reply=petTurn%2?'我看到你写下的话了。你希望我先陪你说说感受，还是一起找一个小小的休息方式？':'这次我们可以慢一点。你刚才说的事情里，有没有一个细节，是最希望被听见的？';
+ if(typeof petMoment==='function')petMoment('chat');
  chatMessages.push({role:'user',text},{role:'assistant',text:reply});chatMessages=chatMessages.slice(-40);render();$('#chat-log').scrollTop=$('#chat-log').scrollHeight;$('#chat-input').focus();
 }
 function bindJourney(){
