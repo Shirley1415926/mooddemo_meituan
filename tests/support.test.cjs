@@ -1,0 +1,11 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const state={support:{plan:[{id:'p1',status:'ready'}],feedback:[]},careCount:0,localStorage:{setItem(){}},cleanup(){},openModal(){},$$(){return[]},supportUpdate(fn){fn();return true}};
+vm.createContext(state);vm.runInContext(fs.readFileSync('public/journey.js','utf8'),state);
+vm.runInContext("activeCare={type:'breath',planId:'p1'};finishCare(false)",state);
+assert.equal(state.careCount,0);assert.equal(state.support.plan[0].status,'ready');
+vm.runInContext("activeCare={type:'breath',planId:'p1'};finishCare(true);finishCare(true)",state);
+assert.equal(state.careCount,1);assert.equal(state.support.plan[0].status,'done');
+state.support.plan=[{id:'replacement',status:'ready'}];
+vm.runInContext("activeCare={type:'breath',planId:'p1'};finishCare(true)",state);
+assert.equal(state.support.plan[0].status,'ready');
+console.log('PASS: early stop, completion, duplicate completion, replaced-plan isolation');
