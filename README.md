@@ -94,3 +94,9 @@ node --check public/app.js
 - 陪伴小屋分为互动与聊天视图，不再上下堆叠；切换保留本次会话。设备说明、反馈回顾按需展开。
 - 分析默认显示概要与趋势，因素/行动建议展开查看。日记每页 3 篇、社群每页 2 帖，长文本可展开；筛选后从第一页开始。
 - 不截断功能、不锁定页面高度；用户展开内容后仍可自然滚动。新增 `public/compact.js` 必须随整个 public 目录上传。
+
+### 自主认养与卡通形象
+
+未认养时不默认生成宠物。流程：选择暖橘白/银灰白外貌 → 起名（1–12 字）→ 确认接回家。外貌、名字、认养日期保存在 `manman.adoption.v1`；认养卡可修改名字，保留认养时间与原有回忆。可以跳过认养使用日记、分析和放松功能。对话仍为分支演示。
+
+形象按用户反馈更新为大眼睛、圆脸、短爪的 2D 卡通风格，替代写实小眼睛版本。使用内置 image_gen 生成，资源：`public/assets/xiaoman-room.jpg`、`public/assets/silver-room.jpg`。最终橘猫提示词：cute 2D kawaii orange-and-white chibi kitten, huge round expressive dark brown eyes with white catchlights, oversized round head, tiny pink nose, smiling mouth, short paws, plump body, smooth brown outlines and flat pastel colors; centered on sage cushion in simple cream room with arched window, plant, toy ball and bowl; no text or watermark. 银灰款编辑提示词：preserve the exact composition, huge sparkling eyes, proportions, pose, outlines and background; change only orange fur and stripes to silver/medium gray, keeping white muzzle/chest/paws and pink nose/ears.
