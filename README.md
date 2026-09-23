@@ -87,3 +87,10 @@ node --check public/app.js
 首页采用奶油纸色、深橄榄色、暖杏色，使用独立双列和紧凑辅助卡片；标题、情绪选择器、正文与提示重新建立层级。陪伴角色统一为猫咪小满，保留已有日记与成长回忆，取消双角色切换。小屋使用原创插画与互动动画反馈；当前为交互原型，非骨骼动画或真实 AI。
 
 插画通过内置 image_gen 工具生成，项目资源为 `public/assets/xiaoman-room.jpg`，部署必须同时包含 `assets/` 和 `visual.css`。生成提示词：refined gouache and colored-pencil editorial illustration for a warm emotional journal; one apricot-and-cream cat with three forehead stripes on a moss-green cushion, ceramic snack bowl, wooden ball, arched sunlit window and leafy plant; ivory, olive, terracotta, butter yellow; adult lifestyle stationery aesthetic; no text, logos or watermark.
+
+### 缩短页面与渐进展示
+
+- 首页仅需选择心情即可保存；具体感受、因素、正文放入可展开的选填区。周趋势与其他练习按需展开。
+- 陪伴小屋分为互动与聊天视图，不再上下堆叠；切换保留本次会话。设备说明、反馈回顾按需展开。
+- 分析默认显示概要与趋势，因素/行动建议展开查看。日记每页 3 篇、社群每页 2 帖，长文本可展开；筛选后从第一页开始。
+- 不截断功能、不锁定页面高度；用户展开内容后仍可自然滚动。新增 `public/compact.js` 必须随整个 public 目录上传。
