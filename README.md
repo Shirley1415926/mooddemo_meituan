@@ -100,3 +100,7 @@ node --check public/app.js
 未认养时不默认生成宠物。流程：选择暖橘白/银灰白外貌 → 起名（1–12 字）→ 确认接回家。外貌、名字、认养日期保存在 `manman.adoption.v1`；认养卡可修改名字，保留认养时间与原有回忆。可以跳过认养使用日记、分析和放松功能。对话仍为分支演示。
 
 形象按用户反馈更新为大眼睛、圆脸、短爪的 2D 卡通风格，替代写实小眼睛版本。使用内置 image_gen 生成，资源：`public/assets/xiaoman-room.jpg`、`public/assets/silver-room.jpg`。最终橘猫提示词：cute 2D kawaii orange-and-white chibi kitten, huge round expressive dark brown eyes with white catchlights, oversized round head, tiny pink nose, smiling mouth, short paws, plump body, smooth brown outlines and flat pastel colors; centered on sage cushion in simple cream room with arched window, plant, toy ball and bowl; no text or watermark. 银灰款编辑提示词：preserve the exact composition, huge sparkling eyes, proportions, pose, outlines and background; change only orange fur and stripes to silver/medium gray, keeping white muzzle/chest/paws and pink nose/ears.
+
+### 猫咪短互动动画
+
+互动区使用两套 4×2 透明角色动作图（`assets/apricot-actions.png`、`assets/silver-actions.png`），由内置 image_gen 生成：同一大眼睛卡通猫，依次为待机、左右蹭头、低头吃/舔嘴、抬爪/推球、蜷睡；银灰版仅替换毛色，保留全部姿势和位置。点击播放 4 帧、每帧 500ms，共约 2 秒后恢复待机；重复点击取消前一个动作，离开页面清理计时器。无暂停按钮，无循环待机动画；减少动态效果时仅展示对应静态姿势后恢复。
