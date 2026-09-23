@@ -81,3 +81,9 @@ node --check public/app.js
 - 自愿互动与聊天留下本机回忆，不保存聊天内容。同日同类型仅记录一次；在 3/7 个不同日期互动后进入新阶段，不要求连续，不扣除成长；可预览体型和小屋装饰变化，也可清除回忆。
 - 宠物场景为陪伴页视觉主体；聊天随后，轻关怀建议、练习、设备连接为后续入口。记录、趋势、社群、陪伴分别使用橄榄绿、蓝、紫、暖杏色强调。
 - 仍是静态产品原型：真实 AI、真实设备接入、跨设备同步均未启用。部署时上传整个 `public/` 到原 CloudBase 应用，保持域名不变。
+
+### 视觉重设计（2026-09-23）
+
+首页采用奶油纸色、深橄榄色、暖杏色，使用独立双列和紧凑辅助卡片；标题、情绪选择器、正文与提示重新建立层级。陪伴角色统一为猫咪小满，保留已有日记与成长回忆，取消双角色切换。小屋使用原创插画与互动动画反馈；当前为交互原型，非骨骼动画或真实 AI。
+
+插画通过内置 image_gen 工具生成，项目资源为 `public/assets/xiaoman-room.jpg`，部署必须同时包含 `assets/` 和 `visual.css`。生成提示词：refined gouache and colored-pencil editorial illustration for a warm emotional journal; one apricot-and-cream cat with three forehead stripes on a moss-green cushion, ceramic snack bowl, wooden ball, arched sunlit window and leafy plant; ivory, olive, terracotta, butter yellow; adult lifestyle stationery aesthetic; no text, logos or watermark.
