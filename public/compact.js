@@ -35,10 +35,6 @@ function compactLayout(){
  if(page==='journal'){
   main.querySelectorAll('.entry>p:first-of-type').forEach(p=>{if(p.textContent.length>100)compactDetails('阅读这篇日记',[p],'entry-full')});compactPages('.entry',3,'journal');
  }
- if(page==='insights'){
-  const factors=main.querySelector('.bottom-row'),trend=main.querySelector('.insight-detail');
-  if(factors&&trend){trend.before(factors);compactDetails('查看情绪趋势',[trend],'trend-disclosure')}
- }
  if(page==='community'){
   compactPages('.community-post',2,'community');
   main.querySelectorAll('.post-text').forEach(p=>{if(p.textContent.length>140&&!p.closest('details'))compactDetails('展开完整心情',[p],'entry-full')});
