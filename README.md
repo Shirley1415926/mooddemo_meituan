@@ -112,3 +112,11 @@ node --check public/app.js
 - 小屋使用独立背景与角色层，可直接点击猫咪摸头。新增 `assets/room-background.jpg` 由内置 image_gen 编辑原卡通图，提示为：remove only the cat and reconstruct the empty sage cushion; preserve room, window, plant, bowl, ball, palette and composition; no animals or text.
 - 页面切换 230ms，桌面弹窗进入 260ms、退出 160ms，手机底部弹层进入 280ms；重开弹窗会取消尚未结束的关闭操作。尊重系统减少动态效果设置。
 - 参考：Finch 官方产品 https://finchcare.com/ （角色作为陪伴入口）；Material Duration & easing https://m1.material.io/motion/duration-easing.html （短过渡、自然减速和进入/退出时长差异）。未复用其他产品的角色或素材。
+
+
+### 2026-09-24 · 界面更新
+
+- 采用深松绿导航、明亮卡片与少量杏色/紫色点缀，统一线性 SVG 图标、按钮和字体层级。
+- 桌面小屋改为场景与互动并排；手机保留紧凑的上下布局，悬浮小猫避开小屋底部操作。
+- 首页增加可直接启动的呼吸与环境音入口；同步更新日记、趋势、社群、认养及弹窗样式。
+- 新增 `public/ui.js` 与 `public/studio.css`，所有页面资源带版本号以减少旧缓存。部署时仍需上传整个 `public/` 到原腾讯云应用，域名保持不变。
