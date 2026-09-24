@@ -96,7 +96,7 @@ body[data-page] .conversation-header h2{font-size:18px;margin:0 0 4px}
 .chat-options>summary{cursor:pointer;padding:10px;font-size:13px;min-height:44px;display:flex;align-items:center;color:#655c4e}
 .chat-options-panel{position:absolute;right:0;top:46px;width:230px;background:#fffefa;border:1px solid #d7d2c5;padding:16px;border-radius:12px;z-index:4;box-shadow:0 8px 24px #29272315;display:grid;gap:8px}
 .chat-options-panel label{font-size:13px}
-body[data-page] .conversation-card .chat-log{height:320px;max-height:46dvh;min-height:220px;overflow-y:auto;overscroll-behavior:contain;padding:22px;display:flex;flex-direction:column;gap:18px;background:#f3f0e7;scrollbar-gutter:stable}
+body[data-page] .conversation-card .chat-log{height:22dvh;max-height:220px;min-height:145px;overflow-y:auto;overscroll-behavior:contain;padding:22px;display:flex;flex-direction:column;gap:18px;background:#f3f0e7;scrollbar-gutter:stable}
 .chat-message{display:flex;gap:10px;align-items:flex-start;flex:none;min-width:0;width:100%}
 .chat-message.user{justify-content:flex-end}
 body[data-page] .conversation-card .chat-bubble{width:auto;max-width:78%;margin:0;padding:12px 15px;background:#fffefa;border:1px solid #e6dfd2;border-radius:2px 14px 14px 14px;min-width:0;align-self:auto}
@@ -112,10 +112,16 @@ body[data-page] .conversation-card #pet-small-action{width:auto;min-height:36px;
 body[data-page] .conversation-card .conversation-notice{margin:4px 22px 16px;font-size:12px;line-height:1.6}
 .conversation-card .chat-starters{margin:0 0 10px}
 .conversation-card .chat-starters[hidden]{display:none}
+.home-companion-copy small{display:block;margin-top:9px;color:#70665c;font-size:11px;line-height:1.5}
+body[data-page=care] .companion-chat-entry{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:14px;background:#f3e6d9;border-color:#e2cbb9}
+body[data-page=care] .companion-chat-entry h2{font-size:21px;margin:7px 0;color:#4d352a}
+body[data-page=care] .companion-chat-entry p{font-size:13px;line-height:1.65;color:#62554b;margin:0}
+.companion-chat-entry .primary{flex:none}
+.chat-guidance{font-size:13px;line-height:1.6;color:#62554b;margin:0 0 12px}
 @media(max-width:800px){
  .conversation-header{padding:14px;gap:10px}
  body[data-page] .conversation-header h2{font-size:17px}
- body[data-page] .conversation-card .chat-log{padding:16px 12px;height:290px;max-height:40dvh;min-height:200px}
+ body[data-page] .conversation-card .chat-log{padding:16px 12px;height:18dvh;max-height:180px;min-height:130px}
  .chat-message{gap:7px}.chat-message .chat-avatar{width:32px;height:32px;border-radius:9px}
  body[data-page] .conversation-card .chat-bubble{max-width:82%;padding:10px 12px}
  body[data-page] .conversation-card .chat-bubble p{font-size:14px}
@@ -124,6 +130,11 @@ body[data-page] .conversation-card .conversation-notice{margin:4px 22px 16px;fon
  body[data-page] .conversation-card .conversation-notice{margin:4px 12px 14px}
  body[data-page] .conversation-card .chat-starters button{font-size:12px}
  .chat-options-panel{width:210px}
+ .home-companion-copy p{display:block;font-size:11px;line-height:1.5;margin:4px 0 8px}
+ .home-companion-copy small{font-size:10px}
+ body[data-page=care] .companion-chat-entry{padding:17px;align-items:flex-start;flex-direction:column;gap:12px}
+ body[data-page=care] .companion-chat-entry h2{font-size:18px}
+ .companion-chat-entry .primary{width:100%}
 }
 /* The core product path: notice a pattern, name a need, choose gentle support. */
 body[data-page=today] .home-reflection{display:grid;gap:11px;padding:21px 23px;background:#f4e8dc;border-color:#e0cabb}
