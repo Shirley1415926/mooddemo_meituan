@@ -27,6 +27,7 @@ function reflectionActionLabel(){return reflection.support==='想被听一听'?(
 function focusReflectionStep(){if(page==='insights'&&insightView!=='reflect'){insightView='reflect';render()}const card=document.querySelector('#reflection-card');card?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});const heading=card?.querySelector('.reflection-body h2');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true})}}
 function bindReflection(){
  bindInsightExplorer();
+ bindReflectionExample();
  const start=document.querySelector('#start-reflection');if(start)start.onclick=()=>{demo=false;if(reflectionExample){reflectionStep=0;reflection={trigger:'',moment:'',feeling:'',need:'',support:''}}reflectionExample=false;go('insights');focusReflectionStep()};
  const example=document.querySelector('#view-insight-example');if(example)example.onclick=()=>{demo=!records.length;insightView='patterns';go('insights')};
  const card=document.querySelector('#reflection-card');if(!card)return;
@@ -36,4 +37,17 @@ function bindReflection(){
  const back=card.querySelector('#reflection-back');if(back)back.onclick=()=>{reflectionStep--;render();focusReflectionStep()};
  card.querySelector('#reflection-reset').onclick=()=>{reflectionExample=false;reflectionStep=0;reflection={trigger:'',moment:'',feeling:'',need:'',support:''};render();focusReflectionStep()};
  const action=card.querySelector('#reflection-action');if(action)action.onclick=()=>{if(reflection.support==='想被听一听'){supportTab='chat';companionPane=adoptedPet?'talk':'room';go('care');document.querySelector('#chat-input')?.focus({preventScroll:true})}else if(reflection.support==='想找一个小行动'){supportTab='plan';go('care')}else startCare('breath')};
+}
+
+
+// A visible worked example; trying it keeps the user's in-session draft intact.
+let reflectionDraft=null;
+function reflectionWorkspace(){
+ return `<div class="reflection-workspace"><aside class="reflection-example" aria-labelledby="reflection-example-title"><h2 id="reflection-example-title">不知道从哪里开始？看一个例子</h2><p class="reflection-example-note">虚构情境 · 没有标准答案</p><dl><div><dt>发生了什么</dt><dd>工作进度比预期慢，今天又被问起。</dd></div><div><dt>我的感受</dt><dd>焦虑，心里一直绷着。</dd></div><div><dt>我在意什么</dt><dd>担心做不好，也希望自己的努力被看见。</dd></div><div><dt>此刻需要什么</dt><dd>先被听一听，愿意时再想下一小步。</dd></div></dl><p class="reflection-example-takeaway">从「我怎么又焦虑了」，到「原来我很在意把事情做好」。先理解自己，不急着解决一切。</p><button type="button" class="secondary" id="try-reflection-example">${reflectionDraft?'重新体验这个示例':'用这个示例试一遍'}</button>${reflectionDraft?'<button type="button" class="link-button" id="restore-reflection-draft">回到我的梳理</button>':''}</aside>${reflectionPanel()}</div>`;
+}
+function bindReflectionExample(){
+ const example=document.querySelector('#try-reflection-example');
+ if(example)example.onclick=()=>{if(!reflectionDraft)reflectionDraft={value:{...reflection},step:reflectionStep,example:reflectionExample};reflectionExample=true;reflectionStep=0;reflection={trigger:'工作',moment:'工作进度比预期慢，今天又被问起。',feeling:'焦虑',need:'担心做不好',support:'想被听一听'};render();focusReflectionStep()};
+ const restore=document.querySelector('#restore-reflection-draft');
+ if(restore)restore.onclick=()=>{if(!reflectionDraft)return;reflection={...reflectionDraft.value};reflectionStep=reflectionDraft.step;reflectionExample=reflectionDraft.example;reflectionDraft=null;render();focusReflectionStep()};
 }

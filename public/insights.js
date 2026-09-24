@@ -11,7 +11,7 @@ function renderInsights(){
  const selected=factors.find(f=>f.tag===insightFactor)||factors[0];
  const nav=`<nav class="insight-navigation" aria-label="了解情绪"><button data-insight-view="patterns" aria-pressed="${insightView==='patterns'}">触发因素分析</button><button data-insight-view="reflect" aria-pressed="${insightView==='reflect'}">梳理一次经历</button><button data-insight-view="trend" aria-pressed="${insightView==='trend'}">情绪趋势</button></nav>`;
  const top=heading('','是什么影响了我的心情？','先从记录里找线索，再回到具体经历。')+nav;
- if(insightView==='reflect')return top+`${reflectionExample?'<p class="demo-banner">正在梳理一条示例经历。可修改内容或重新梳理，不会写入你的日记。</p>':''}<button class="link-button" data-insight-view="patterns">返回触发线索</button>${reflectionPanel()}`;
+ if(insightView==='reflect')return top+`${reflectionExample?'<p class="demo-banner">正在梳理一条示例经历。可修改内容或重新梳理，不会写入你的日记。</p>':''}<button class="link-button" data-insight-view="patterns">返回触发线索</button>${reflectionWorkspace()}`;
  const filters=`<div class="insight-filters"><div class="range-tabs" aria-label="分析时间范围">${[7,30].map(n=>`<button data-range="${n}" class="${range===n?'active':''}" aria-pressed="${range===n}">近 ${n} 天</button>`).join('')}</div><button class="link-button" id="toggle-demo">${demo?'返回我的记录':'体验示例分析'}</button></div>${demo?'<p class="demo-banner">正在查看示例日记，不是你的真实分析；示例不会保存到你的日记。</p>':''}`;
  if(insightView==='trend')return top+filters+`<section class="card insight-detail"><h2>心情随时间的变化</h2>${chart(range,true)}<p class="small-note">同一天多次记录取平均值；短线代表暂无记录。</p><p>记录 ${new Set(items.map(r=>dayKey(r.date))).size} 天 · 平均心情 ${items.length?(items.reduce((s,r)=>s+r.mood,0)/items.length).toFixed(1):'—'} / 5 · 累计完成 ${careCount} 次关怀练习</p></section>`;
  let body='';
