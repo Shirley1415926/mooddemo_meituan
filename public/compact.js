@@ -4,7 +4,7 @@ const DISCLOSURE_COPY={
  '想多说一点？补充原因与日记 · 选填':['journal','补充原因与日记','选填 · 记录感受、原因与今天的故事'],
  '看看这一周的心情':['insights','这一周的心情','查看近 7 天的情绪变化'],
  '其他放松方式与温柔提醒':['breath','更多放松与关怀','呼吸练习 · 环境声音 · 今日寄语'],
- '查看影响因素与行动建议':['insights','影响因素与行动建议','看看哪些事情影响心情，选一个小行动'],
+ '查看情绪趋势':['insights','查看情绪趋势','回看近 7 天或 30 天的心情起伏'],
  '陪伴说明与更多支持':['care','陪伴说明与更多支持','了解陪伴方式，寻找适合自己的支持'],
  '回看反馈与更多关怀':['care','回看反馈与更多关怀','查看练习后的感受与其他关怀方式'],
  '提醒偏好与功能说明':['plan','提醒偏好与功能说明','设置示例提醒，了解功能边界'],
@@ -36,7 +36,8 @@ function compactLayout(){
   main.querySelectorAll('.entry>p:first-of-type').forEach(p=>{if(p.textContent.length>100)compactDetails('阅读这篇日记',[p],'entry-full')});compactPages('.entry',3,'journal');
  }
  if(page==='insights'){
-  const detail=main.querySelector('.bottom-row');if(detail)compactDetails('查看影响因素与行动建议',[detail]);
+  const factors=main.querySelector('.bottom-row'),trend=main.querySelector('.insight-detail');
+  if(factors&&trend){trend.before(factors);compactDetails('查看情绪趋势',[trend],'trend-disclosure')}
  }
  if(page==='community'){
   compactPages('.community-post',2,'community');

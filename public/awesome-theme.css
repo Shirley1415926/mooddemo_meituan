@@ -125,3 +125,60 @@ body[data-page] .conversation-card .conversation-notice{margin:4px 22px 16px;fon
  body[data-page] .conversation-card .chat-starters button{font-size:12px}
  .chat-options-panel{width:210px}
 }
+/* The core product path: notice a pattern, name a need, choose gentle support. */
+body[data-page=today] .home-reflection{display:grid;gap:11px;padding:21px 23px;background:#f4e8dc;border-color:#e0cabb}
+body[data-page=today] .home-reflection h2{font-size:18px;line-height:1.45;margin:0 0 6px;color:#4d352a}
+body[data-page=today] .home-reflection p{font-size:14px;line-height:1.7;margin:0;color:#5d5148}
+.home-reflection-actions{display:flex;flex-wrap:wrap;gap:9px}
+.home-reflection-actions button{min-height:42px}
+body[data-page=today] .home-reflection .home-reflection-note{font-size:12px;color:#65584d}
+body[data-page=insights] .reflection-card{margin:16px 0 18px;padding:22px 24px;background:#fffefa}
+.reflection-head{display:flex;justify-content:space-between;align-items:start;gap:18px}
+body[data-page=insights] .reflection-head h2{font-size:21px;margin:0 0 5px;color:#352d27}
+.reflection-head p{font-size:14px;color:#665c51;line-height:1.7;margin:0}
+.reflection-head>span{font-size:12px;color:#735b48;white-space:nowrap}
+.reflection-progress{display:flex;gap:8px;margin:19px 0 21px}
+.reflection-progress span{flex:1;background:#f1eee6;border:1px solid #e6e0d5;border-radius:8px;padding:9px 7px;text-align:center;color:#5e584f;font-size:12px;line-height:1.4}
+.reflection-progress .current{background:#f0dbcb;color:#743d2b;border-color:#be8d72;font-weight:600}
+.reflection-progress .done{background:#e7ebdf;color:#455242}
+.reflection-body h2{font-size:18px;margin:0 0 6px;color:#3d352d}
+.reflection-body>p{font-size:14px;line-height:1.7;color:#625c52;margin:0 0 13px}
+.reflection-body>label,.reflection-body .reflection-label{display:block;font-size:14px;font-weight:600;color:#3d352d;margin:15px 0 8px}
+.reflection-body textarea{min-height:75px;background:#fffefa;font-size:15px}
+.reflection-choices{display:flex;flex-wrap:wrap;gap:8px}
+.reflection-choice{background:#fffefa;border:1px solid #d8cfc0;border-radius:9px;color:#584e44;padding:9px 13px;min-height:42px;font-size:13px}
+.reflection-choice:hover{background:#f3ede3;border-color:#ac8c74}
+.reflection-choice.selected{background:#f0dbcb;border-color:#a74d32;color:#743d2b;font-weight:600}
+.reflection-result{background:#f3f0e8;border:1px solid #e3ddcf;border-radius:10px;padding:14px 16px;margin-top:16px}
+.reflection-result strong{font-size:14px;color:#423a30}
+.reflection-result p{font-size:15px;line-height:1.7;color:#423a30;margin:6px 0}
+.reflection-result small{font-size:12px;color:#625c52}
+.reflection-actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:18px}
+.reflection-actions button{min-height:42px}
+.reflection-actions .link-button{margin-left:auto}
+body[data-page=insights] .reflection-foot{font-size:12px;color:#625c52;margin:16px 0 0;border-top:1px solid #e6e0d5;padding-top:11px}
+body[data-page=insights] .bottom-row{margin:0 0 15px}
+body[data-page=insights] .bottom-row>.card{padding:21px}
+body[data-page=insights] .bottom-row h2{font-size:17px}
+body[data-page=insights] .factor{font-size:13px}
+body[data-page=insights] .factor .muted{font-size:12px;color:#625c52}
+body[data-page=insights] .bottom-row .small-note{font-size:12px;line-height:1.7;color:#625c52}
+body[data-page=insights] .bottom-row .modal-copy{font-size:14px;color:#625c52}
+body[data-page=insights] .trend-disclosure{margin:0 0 16px}
+@media(max-width:800px){
+ body[data-page=today] .home-reflection{padding:17px;gap:9px}
+ body[data-page=today] .home-reflection h2{font-size:16px}
+ body[data-page=today] .home-reflection p{font-size:13px}
+ .home-reflection-actions{display:grid;grid-template-columns:1fr 1fr}
+ .home-reflection-actions button{font-size:12px!important;padding:9px 5px}
+ body[data-page=insights] .reflection-card{padding:18px 15px;margin:14px 0}
+ .reflection-head{display:block}
+ .reflection-head>span{display:block;margin-top:5px}
+ body[data-page=insights] .reflection-head h2{font-size:18px}
+ .reflection-progress{gap:4px;margin:14px 0}
+ .reflection-progress span{font-size:10px;padding:7px 2px}
+ .reflection-choice{font-size:12px;padding:8px 11px}
+ .reflection-actions .link-button{margin-left:0}
+ body[data-page=insights] .bottom-row>.card{padding:18px 15px}
+ body[data-page=insights] .factor{grid-template-columns:65px 1fr 78px;gap:6px}
+}

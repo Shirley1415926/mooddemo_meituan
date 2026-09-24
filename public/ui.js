@@ -34,6 +34,7 @@ function polishUI(){
  if(page==='today'){
   const form=document.querySelector('.today-primary>.card');
   form.insertAdjacentHTML('afterend',`<div class="care-shortcuts" aria-label="给自己一点关怀"><button data-care="breath"><span class="shortcut-icon">${uiIcon('breath')}</span><span><strong>呼吸一下</strong><small>1 分钟，回到此刻</small></span>${uiIcon('arrow')}</button><button data-care="sound"><span class="shortcut-icon">${uiIcon('sound')}</span><span><strong>听见安宁</strong><small>3 分钟，给思绪留白</small></span>${uiIcon('arrow')}</button></div>`);
+  form.nextElementSibling.insertAdjacentHTML('afterend',homeReflection());
  }
  if(page==='care'&&supportTab!=='chat'){
   const copy={plan:['按自己的节奏，照顾自己。','建议可以跳过，也可以随时改变。'],exercises:['给自己，一个小小的暂停。','呼吸、聆听或舒展，选此刻喜欢的方式。'],connections:['让关怀，贴近日常。','探索身体信号与生活节奏的连接设计。']}[supportTab];
