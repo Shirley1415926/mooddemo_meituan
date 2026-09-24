@@ -21,7 +21,7 @@ function homeReflection(){
  const ranked=TAGS.map(tag=>({tag,count:low.filter(r=>r.tags.includes(tag)).length})).filter(x=>x.count).sort((a,b)=>b.count-a.count);
  const lead=ranked[0];
  const cue=lead?`近 7 天的低落记录中，「${escape(lead.tag)}」出现 ${lead.count} 次。这只是共同出现的线索，可以从一次具体经历继续梳理。`:recent.length?`已有 ${recent.length} 条心情记录。试着在下次记录时选择影响因素，线索会逐渐清晰。`:'记录心情时可以标记影响因素；也可以先用示例，体验如何发现线索。';
- return `<section class="card home-reflection"><div><h2>情绪从哪里来？一起理一理</h2><p>${cue}</p></div><div class="home-reflection-actions"><button type="button" class="primary" id="start-reflection">开始梳理心情</button><button type="button" class="secondary" id="view-insight-example">${recent.length?'看近 7 天的线索':'体验示例分析'}</button></div><p class="home-reflection-note">再选一个适合此刻的方式：呼吸、听声音，或轻轻活动身体。所有建议都可以跳过。</p></section>`;
+ return `<section class="card home-reflection"><div><h2>情绪从哪里来？一起理一理</h2><p>${cue}</p></div><div class="home-reflection-actions"><button type="button" class="primary" id="start-reflection">开始梳理心情</button><button type="button" class="secondary" id="view-insight-example">${recent.length?'看近 7 天的线索':'体验示例分析'}</button><button type="button" class="secondary" data-tailored-entry>按困扰选练习</button></div><p class="home-reflection-note">再选一个适合此刻的方式：呼吸、听声音，或轻轻活动身体。所有建议都可以跳过。</p></section>`;
 }
 function reflectionActionLabel(){return reflection.support==='想被听一听'?(adoptedPet?'去和小猫聊聊':'去认养陪伴小猫'):reflection.support==='想找一个小行动'?'看看轻关怀建议':'开始一分钟呼吸'}
 function focusReflectionStep(){const card=document.querySelector('#reflection-card');card?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});const heading=card?.querySelector('.reflection-body h2');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true})}}
