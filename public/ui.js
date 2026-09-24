@@ -23,7 +23,7 @@ function uiIcon(name){
  return `<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]||paths.care}</svg>`;
 }
 function polishUI(){
- const labels={today:'此刻的我',journal:'情绪日记',insights:'看见自己',community:'心情广场',care:'陪伴关怀'};
+ const labels={today:'此刻的我',record:'记录心情',journal:'情绪日记',insights:'看见自己',community:'心情广场',care:'陪伴关怀'};
  document.querySelectorAll('.nav').forEach(b=>b.querySelector('span').innerHTML=uiIcon(b.dataset.page));
  document.querySelector('#section-title').textContent=labels[page];
  document.body.dataset.careView=page==='care'?supportTab==='chat'?(adoptedPet?companionPane:'adoption'):supportTab:'';
@@ -31,11 +31,6 @@ function polishUI(){
  document.querySelectorAll('.support-tabs button').forEach(b=>b.insertAdjacentHTML('afterbegin',uiIcon({chat:'care',plan:'plan',exercises:'breath',connections:'connections'}[b.dataset.supportTab])));
  const modes=document.querySelectorAll('.companion-mode button');
  modes.forEach(b=>b.insertAdjacentHTML('afterbegin',uiIcon(b.dataset.companionPane==='room'?'play':'chat')));
- if(page==='today'){
-  const form=document.querySelector('.today-primary>.card');
-  form.insertAdjacentHTML('afterend',`<div class="care-shortcuts" aria-label="给自己一点关怀"><button data-care="breath"><span class="shortcut-icon">${uiIcon('breath')}</span><span><strong>呼吸一下</strong><small>1 分钟，回到此刻</small></span>${uiIcon('arrow')}</button><button data-care="sound"><span class="shortcut-icon">${uiIcon('sound')}</span><span><strong>听见安宁</strong><small>3 分钟，给思绪留白</small></span>${uiIcon('arrow')}</button></div>`);
-  form.nextElementSibling.insertAdjacentHTML('afterend',homeReflection());
- }
  if(page==='care'&&supportTab!=='chat'){
   const copy={plan:['按自己的节奏，照顾自己。','建议可以跳过，也可以随时改变。'],exercises:['给自己，一个小小的暂停。','呼吸、聆听或舒展，选此刻喜欢的方式。'],connections:['让关怀，贴近日常。','探索身体信号与生活节奏的连接设计。']}[supportTab];
   document.querySelector('.page-title').textContent=copy[0];

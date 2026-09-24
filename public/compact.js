@@ -27,10 +27,8 @@ function compactDetails(title,nodes,cls=''){
 function compactPages(selector,size,key){const entries=[...document.querySelectorAll(selector)];if(entries.length<=size)return;const total=Math.ceil(entries.length/size);let current=key==='journal'?journalPage:communityPage;current=Math.min(current,total-1);if(key==='journal')journalPage=current;else communityPage=current;entries.forEach((el,i)=>el.hidden=i<current*size||i>=(current+1)*size);const bar=document.createElement('div');bar.className='compact-pagination';bar.innerHTML=`<button class="secondary" data-paging="${key}" data-step="-1" ${current===0?'disabled':''}>上一页</button><span>${current+1} / ${total}</span><button class="secondary" data-paging="${key}" data-step="1" ${current===total-1?'disabled':''}>下一页</button>`;entries.at(-1).after(bar)}
 function compactLayout(){
  const main=document.querySelector('#main');
- if(page==='today'){
+ if(page==='record'){
   const form=main.querySelector('.today-primary>.card');const start=form.querySelector('.feeling-details');const end=form.querySelector('.text-count');let list=[],node=start;while(node){list.push(node);if(node===end)break;node=node.nextElementSibling}compactDetails('想多说一点？补充原因与日记 · 选填',list,'record-extra');
-  const chart=main.querySelector('.today-primary>.card:last-child');compactDetails('看看这一周的心情', [chart]);
-  const side=main.querySelector('.today-secondary');const cards=[...side.children].slice(1);if(cards.length)compactDetails('其他放松方式与温柔提醒',cards,'home-more');
  }
  if(page==='journal'){
   main.querySelectorAll('.entry>p:first-of-type').forEach(p=>{if(p.textContent.length>100)compactDetails('阅读这篇日记',[p],'entry-full')});compactPages('.entry',3,'journal');

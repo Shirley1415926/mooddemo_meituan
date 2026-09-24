@@ -15,7 +15,7 @@ function renderInsights(){
  const filters=`<div class="insight-filters"><div class="range-tabs" aria-label="分析时间范围">${[7,30].map(n=>`<button data-range="${n}" class="${range===n?'active':''}" aria-pressed="${range===n}">近 ${n} 天</button>`).join('')}</div><button class="link-button" id="toggle-demo">${demo?'返回我的记录':'体验示例分析'}</button></div>${demo?'<p class="demo-banner">正在查看示例日记，不是你的真实分析；示例不会保存到你的日记。</p>':''}`;
  if(insightView==='trend')return top+filters+`<section class="card insight-detail"><h2>心情随时间的变化</h2>${chart(range,true)}<p class="small-note">同一天多次记录取平均值；短线代表暂无记录。</p><p>记录 ${new Set(items.map(r=>dayKey(r.date))).size} 天 · 平均心情 ${items.length?(items.reduce((s,r)=>s+r.mood,0)/items.length).toFixed(1):'—'} / 5 · 累计完成 ${careCount} 次关怀练习</p></section>`;
  let body='';
- if(!selected)body=`<section class="card insight-empty"><h2>${items.length?'给记录补充一点情境':'从一条带情境的记录开始'}</h2><p>记录心情时，标记「工作」「睡眠」等影响因素。这里会帮你回看：哪些情境常伴随低落，当时具体发生了什么。</p><button class="primary" data-go="today">去记录心情</button><p class="small-note">也可以点击上方「体验示例分析」，先看看完整过程。</p></section>`;
+ if(!selected)body=`<section class="card insight-empty"><h2>${items.length?'给记录补充一点情境':'从一条带情境的记录开始'}</h2><p>记录心情时，标记「工作」「睡眠」等影响因素。这里会帮你回看：哪些情境常伴随低落，当时具体发生了什么。</p><button class="primary" data-go="record">去记录心情</button><p class="small-note">也可以点击上方「体验示例分析」，先看看完整过程。</p></section>`;
  else {
   const entries=[...selected.entries].sort((a,b)=>new Date(b.date)-new Date(a.date));
   const totalPages=Math.ceil(entries.length/2);insightEvidencePage=Math.min(insightEvidencePage,totalPages-1);
