@@ -1,0 +1,22 @@
+// Optional, device-local introduction. Dismissal never changes user records.
+const GUIDE_KEY='manman.guide.v1';
+let guideStep=0,guideSeen=false;
+try{guideSeen=localStorage.getItem(GUIDE_KEY)==='seen'}catch{}
+const GUIDE_STEPS=[
+ {label:'认识慢慢',title:'每一种心情，都值得被照顾。',intro:'慢慢是你的情绪日记与自我关怀空间。用一个简单的循环，听见自己，也照顾自己。',content:()=>`<div class="guide-flow">${[['today','01','记录心情','选一个心情就能保存，原因和日记都可选填。'],['insights','02','看见变化','回看日记与情绪趋势，发现常出现的影响因素。'],['breath','03','给自己关怀','试试呼吸、环境音或舒展，再看看感受有没有变化。']].map(([icon,n,title,text])=>`<div class="guide-item"><span class="guide-icon">${uiIcon(icon)}</span><div><small>${n}</small><h3>${title}</h3><p>${text}</p></div></div>`).join('')}</div><p class="guide-footnote">没有签到任务，也不需要每天保持开心。</p>`},
+ {label:'探索陪伴',title:'独处，或被陪伴，都可以。',intro:'除了记录，你还可以在这些地方停一会儿。每个入口都能独立使用。',content:()=>`<div class="guide-flow"><div class="guide-item"><span class="guide-icon">${uiIcon('care')}</span><div><h3>陪伴关怀 · 认养你的小猫</h3><p>选外貌、起名字，再摸摸头、喂零食或聊一聊。轻关怀计划可以随时跳过。</p></div></div><div class="guide-item"><span class="guide-icon">${uiIcon('community')}</span><div><h3>心情广场 · 看见彼此</h3><p>看看别人的心情，送出一点善意。分享由你决定，私人日记不会自动公开。</p></div></div><div class="guide-item"><span class="guide-icon">${uiIcon('connections')}</span><div><h3>设备与日历 · 了解连接设计</h3><p>在陪伴关怀中，体验身体信号与繁忙日程如何带来温柔提醒。</p></div></div></div><p class="guide-footnote">当前为产品原型：对话、社群和设备连接为演示，未接入真实 AI、多人社区或设备数据。</p>`},
+ {label:'开始体验',title:'第一步，只要选一个心情。',intro:'不用想好怎么写。先在「此刻的我」留下当下，剩下的等你愿意再说。',content:()=>`<div class="guide-start"><span class="guide-start-icon">${uiIcon('today')}</span><div><h3>选心情 → 保存此刻</h3><p>保存后，可以继续与小猫聊聊，或选一个关怀练习。</p></div></div><div class="guide-next"><p>${uiIcon('journal')}<span><b>情绪日记</b>：回看、编辑，也能导出 PDF 或图片。</span></p><p>${uiIcon('insights')}<span><b>看见自己</b>：查看趋势；还没记录时可体验示例。</span></p></div><div class="guide-privacy">${uiIcon('lock')}<p>日记与认养信息仅保存在当前浏览器，不跨设备同步。重要记录记得导出备份。</p></div><p class="guide-footnote">以后可点击顶部「使用指南」重新查看。</p>`}
+];
+function rememberGuide(){guideSeen=true;try{localStorage.setItem(GUIDE_KEY,'seen')}catch{}}
+function dismissGuide(){rememberGuide();document.querySelector('#welcome-guide').close()}
+function guideView(){const step=GUIDE_STEPS[guideStep],body=document.querySelector('#guide-body');body.innerHTML=`<div class="guide-top"><span class="guide-brand">m.</span><span>慢慢 · 初次见面</span><button type="button" class="link-button" id="guide-skip">跳过引导 ×</button></div><nav class="guide-progress" aria-label="新手引导进度">${GUIDE_STEPS.map((s,i)=>`<button type="button" data-guide-step="${i}" ${i===guideStep?'aria-current="step"':''}><span>${i+1}</span>${s.label}</button>`).join('')}</nav><div class="guide-page"><h2 id="guide-title" tabindex="-1">${step.title}</h2><p class="guide-intro">${step.intro}</p>${step.content()}</div><div class="guide-actions">${guideStep?'<button type="button" class="secondary" id="guide-back">上一步</button>':'<span class="guide-duration">约 30 秒，认识你的心情空间</span>'}<button type="button" class="primary" id="guide-next">${guideStep===2?'开始记录心情':'继续了解'} ${uiIcon('arrow')}</button></div>${guideStep===2?'<button type="button" class="link-button guide-pet" id="guide-pet">想先认识小猫？去陪伴小屋 →</button>':''}`;
+ body.querySelector('#guide-skip').onclick=dismissGuide;
+ body.querySelectorAll('[data-guide-step]').forEach(b=>b.onclick=()=>{guideStep=+b.dataset.guideStep;guideView()});
+ if(guideStep)body.querySelector('#guide-back').onclick=()=>{guideStep--;guideView()};
+ body.querySelector('#guide-next').onclick=()=>{if(guideStep<2){guideStep++;guideView()}else{dismissGuide();go('today');document.querySelector('.mood')?.focus({preventScroll:true})}};
+ const pet=body.querySelector('#guide-pet');if(pet)pet.onclick=()=>{dismissGuide();supportTab='chat';companionPane='room';go('care')};
+ document.querySelector('#welcome-guide').scrollTop=0;
+ if(document.querySelector('#welcome-guide').open)body.querySelector('#guide-title').focus({preventScroll:true});
+}
+function openGuide(){guideStep=0;guideView();document.querySelector('#welcome-guide').showModal();document.querySelector('#guide-title').focus({preventScroll:true})}
+function initGuide(){const dialog=document.querySelector('#welcome-guide');document.querySelector('#open-guide').onclick=openGuide;dialog.addEventListener('close',rememberGuide);dialog.addEventListener('click',e=>{if(e.target!==dialog)return;const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dismissGuide()});if(!guideSeen)openGuide()}
