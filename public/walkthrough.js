@@ -4,13 +4,10 @@ let tourStep=0,tourOrigin='today',tourSeen=false,tourAdoptionPhase=null;
 let tourPetDraft={look:'apricot',name:''};
 try{tourSeen=localStorage.getItem(TOUR_KEY)==='seen'}catch{}
 const TOUR_STEPS=[
- {page:'record',target:'.moods',title:'01 · 先记录此刻的心情',text:'这里是每天的起点。选一个心情，再点击「保存此刻」即可。心情下方可以选影响因素；具体感受和文字日记按需展开。'},
- {page:'care',tab:'chat',pane:'room',target:'.companion-chat-entry [data-open-pet-chat],.adoption-intro [data-adopt-start]',pet:true,title:'02 · 让小猫陪你说说心事',text:'先认养、起名，再和小猫一问一答地聊天，也能一起玩。AI 情绪陪伴是产品规划；当前回复为本地模拟，不是专业咨询。'},
- {page:'record',target:'.today-factors',title:'03 · 给情绪添一条线索',text:'选完心情，可以顺手标记一个可能相关的情境，也可以跳过。后续在「看见自己」回看这些线索与对应日记。'},
- {page:'journal',target:'.entry:not([hidden]),.empty',title:'04 · 给心情留一本日记',text:'保存的心情会出现在这里，可以回看、编辑和导出。还没有记录？「体验示例日记」能帮助你了解效果。'},
- {page:'insights',target:'.insight-navigation',title:'05 · 看见线索，也梳理感受',text:'先看哪些情境伴随低落，点选情境查看对应日记，再选择一次经历梳理感受与需要，完成后可自愿将发现存回原日记。没有记录时可以体验示例；趋势在「情绪趋势」中查看。'},
- {page:'care',tab:'exercises',target:'.tailored-options',title:'06 · 按此刻困扰选择关怀',text:'选择压力、思绪太满、久坐或委屈，看看适合尝试的方向。每个建议都能更换或跳过，并写明研究来源及适用范围。'},
- {page:'community',target:'.community-filters',title:'07 · 在这里，看见彼此',text:'浏览不同主题的心情，送出善意，或自愿分享。私人日记不会自动公开；当前社群为本机演示。'}
+ {page:'record',target:'.moods',title:'01 · 记下此刻的心情',text:'选一个心情就能保存。愿意的话，再标记影响因素或写两句，留给以后的自己回看。'},
+ {page:'care',tab:'chat',pane:'room',target:'.companion-chat-entry [data-open-pet-chat],.adoption-intro [data-adopt-start]',pet:true,title:'02 · 找小猫陪你聊聊',text:'可以认养、起名，和小猫聊心事或玩耍。也可以以后再来，页面边上就能找到它。聊天目前为本地模拟。'},
+ {page:'insights',target:'.insight-navigation',title:'03 · 看见情绪背后的线索',text:'回看哪些情境常伴随你的情绪，再梳理一次经历中的感受与需要。还没记录？可以先看示例。'},
+ {page:'care',tab:'exercises',target:'.tailored-options',title:'04 · 给自己一点放松',text:'按此刻的困扰，试试呼吸、声音或舒展练习。建议可以更换，随时都能停下。剩下的空间，留给你慢慢探索。'}
 ];
 function finishTour(start=false){tourAdoptionPhase=null;tourSeen=true;try{localStorage.setItem(TOUR_KEY,'seen')}catch{};const dialog=document.querySelector('#feature-tour');dialog.close();go(start?'record':tourOrigin);scheduleGuestInvite();if(start)document.querySelector('.mood')?.focus({preventScroll:true});else document.querySelector('#open-guide')?.focus({preventScroll:true})}
 function positionTour(){const dialog=document.querySelector('#feature-tour');if(!dialog?.open)return;if(tourAdoptionPhase)return;const target=document.querySelector(TOUR_STEPS[tourStep].target),card=dialog.querySelector('.tour-card');if(!target||!card)return;const r=target.getBoundingClientRect(),w=innerWidth,h=innerHeight,gap=9;const left=Math.max(8,r.left-gap),right=Math.min(w-8,r.right+gap),top=Math.max(8,r.top-gap),bottom=Math.min(h-8,r.bottom+gap);const focus=dialog.querySelector('.tour-focus');Object.assign(focus.style,{left:left+'px',top:top+'px',width:Math.max(0,right-left)+'px',height:Math.max(0,bottom-top)+'px'});const shade=dialog.querySelectorAll('.tour-shade');const rects=[[0,0,w,top],[0,top,left,bottom-top],[right,top,w-right,bottom-top],[0,bottom,w,h-bottom]];shade.forEach((s,i)=>{const[x,y,width,height]=rects[i];Object.assign(s.style,{left:x+'px',top:y+'px',width:width+'px',height:height+'px'})});const ch=card.offsetHeight,cw=card.offsetWidth;let y=bottom+16;if(y+ch>h-16)y=top-ch-16;if(y<12)y=Math.max(12,h-ch-16);const x=Math.max(12,Math.min(left,w-cw-12));Object.assign(card.style,{left:x+'px',top:y+'px'});}
