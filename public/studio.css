@@ -201,3 +201,23 @@ body[data-page=community] .community-aside ul{margin:12px 0 18px}
 body[data-page=community] .community-aside button{font-size:13px;min-height:42px}
 @media(min-width:801px){body[data-page=community] .community-layout{grid-template-columns:minmax(0,1.8fr) minmax(280px,1fr)}body[data-page=community] .community-aside{position:sticky;top:20px}}
 @media(max-width:800px){body[data-page=community] .community-aside{display:contents}body[data-page=community] .community-welcome{order:-1}body[data-page=community] .community-aside .card{padding:16px}body[data-page=community] .community-aside h2{font-size:16px;margin-bottom:8px}body[data-page=community] .community-aside p{margin:8px 0}body[data-page=community] .community-aside ul{margin:8px 0 12px}body[data-page=community] .community-rest,body[data-page=community] #restore-hidden{order:1}}
+
+/* Keyboard access and readable validation on the recording flow. */
+.skip-link{position:fixed;top:12px;left:12px;z-index:200;background:#fff;color:#284f43;padding:12px 18px;border:2px solid #284f43;border-radius:8px;transform:translateY(-180%)}
+.skip-link:focus{transform:translateY(0)}
+#main{scroll-margin-top:20px}
+#main:focus-visible{outline:3px solid var(--focus-ring);outline-offset:5px}
+summary:focus-visible{outline:3px solid var(--focus-ring);outline-offset:3px}
+.field-error{color:#953d2c;font-size:14px;line-height:1.6;margin:8px 0}
+#modal{overscroll-behavior:contain;max-height:calc(100dvh - 32px);overflow-y:auto}
+#close-modal{min-width:44px;min-height:44px;color:#526256}
+body[data-page=today] button,body[data-page=today] summary{touch-action:manipulation;scroll-margin-block:90px}
+body[data-page=today] .feeling-details summary,body[data-page=today] .chip{min-height:44px}
+@media(max-width:800px){body[data-page=today] #note{font-size:16px}body[data-page=today] #main{padding-bottom:100px}}
+
+.sidebar .nav{text-decoration:none;font-family:inherit}
+body[data-page=today] .mini-caption,body[data-page=today] .recommend p,body[data-page=today] .breathe-card p{color:#596451}
+body[data-page=today] .quote-card small{color:#6e6580}
+
+/* Keep the floating companion clear of keyboard-operated content. */
+body:has(#main :focus-visible) #pet-dock{visibility:hidden}
