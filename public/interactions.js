@@ -5,7 +5,7 @@
   const el=pressed;clearTimeout(releaseTimer);
   if(!el)return;
   const clear=()=>{el.classList.remove('is-pressing');if(pressed===el)pressed=null};
-  if(immediate)clear();else releaseTimer=setTimeout(clear,Math.max(0,130-(performance.now()-started)));
+  if(immediate)clear();else releaseTimer=setTimeout(clear,Math.max(0,70-(performance.now()-started)));
  };
  document.addEventListener('pointerdown',e=>{
   release(true);if(e.button!==0)return;
