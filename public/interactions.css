@@ -28,3 +28,12 @@ button .ui-icon{transition:translate 180ms var(--touch-ease)}
  .primary:not(:disabled):hover .ui-icon:last-child{translate:none}
  #feature-tour.tour-adopting .tour-adopt-card{animation:none}
 }
+/* Invitation is secondary to the diary; dismissing it leaves the page quiet. */
+.guest-dock .guest-invitation{width:230px;padding:18px;background:#faf9f5;border:0;box-shadow:0 8px 30px #35432b26;transform-origin:bottom right}
+.guest-invitation::after{content:"";position:absolute;right:34px;bottom:-7px;width:14px;height:14px;background:#faf9f5;rotate:45deg}
+.guest-invitation p{font-size:15px;line-height:1.5;color:#35422e}.guest-invitation p small{font-size:12px;color:#59634f;line-height:1.7}.guest-invitation .link-button{margin:0;color:#73513e}.guest-dock .dock-name{color:#526548;background:#eef1e5;border-color:#d4ddc7}.tour-optional-pet{margin-top:18px}
+@media(max-width:800px){.guest-dock .guest-invitation{width:min(230px,calc(100vw - 36px));right:10px;padding:16px}.guest-invitation::after{right:15px}}
+body:has(#main :focus-visible) #pet-dock.guest-dock{visibility:visible}
+body:has(dialog[open]) #pet-dock.guest-dock{visibility:hidden}
+@media(max-width:800px){body:has(textarea:focus) #pet-dock.guest-dock,body:has(input:focus) #pet-dock.guest-dock{visibility:hidden}}
+body[data-page=today] #pet-dock.guest-dock{display:block}
