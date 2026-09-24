@@ -1,0 +1,88 @@
+/* Claude reference from awesome-design; adapted for 慢慢's compact app UI. */
+:root{--bg:#f5f4ed;--paper:#faf9f5;--ink:#292723;--muted:#65625b;--line:#e1ded4;--green:#a74d32;--radius:16px;--text-main:#292723;--text-secondary:#5e5d59;--text-caption:#65625b;--action-strong:#a74d32;--surface-quiet:#eeece3;--focus-ring:#995037;--shadow:none}
+body[data-page]{background:#f5f4ed;color:#292723;--section-accent:#a74d32;--section-soft:#f1e5da;letter-spacing:0}
+body[data-page=community]{--section-accent:#705879;--section-soft:#eee8ed}
+body[data-page=insights]{--section-accent:#52644d;--section-soft:#e7ebdf}
+body .sidebar{background:#ebe8de;color:#292723;border-right:1px solid #dedbd0}
+body .brand{color:#292723}body .brand-mark{background:#a74d32;color:#faf9f5;border:0;border-radius:12px}
+body .brand small,body .nav-caption,body .sidebar-bottom>small{color:#69665f}
+body .nav{color:#5e5d59;border-radius:8px}body .nav:hover{background:#e2ded2;color:#292723}
+body .nav.active{background:#faf9f5;color:#8e402b;box-shadow:none}
+body .sidebar-bottom .little-note{font-family:'Songti SC','Noto Serif CJK SC',serif;color:#4d4c48}
+body .sidebar-art{color:#a36b52}body .sidebar-art:before{border-color:#d4caba}
+body .privacy{color:#5e5d59;border-color:#d4cfc1}
+body .app-header{border-color:#dfdbd0}body .header-location strong,body .breadcrumb{color:#5e5d59}
+body .header-pause,body .header-guide{background:#faf9f5;border-color:#dedbd0;color:#5e5d59}
+body[data-page] .heading .page-title{font-family:'Songti SC','Noto Serif CJK SC',Georgia,serif;font-weight:600;font-size:34px;line-height:1.4;letter-spacing:0;color:#292723;text-wrap:balance}
+body[data-page] .title-second{color:inherit}body[data-page] .subtitle{color:#65625b;font-size:14px}
+body[data-page] .eyebrow{display:none}
+body[data-page] .card{background:#faf9f5;border-color:#e1ded4;border-radius:16px;box-shadow:none}
+body[data-page] .card h2{color:#292723;letter-spacing:0}
+body[data-page] .primary{background:#a74d32;color:#fff;border-color:#a74d32;box-shadow:none;border-radius:9px;font-size:14px}
+body[data-page] .primary:hover{background:#8d3e28}body[data-page] .primary:disabled{background:#d7c2b7;color:#55473f;opacity:.7}
+body[data-page] .secondary{background:#faf9f5;color:#4d4c48;border-color:#d7d2c5;border-radius:9px;font-size:13px}
+body[data-page] .secondary:hover{background:#e8e6dc}
+body[data-page] .link-button{color:#8e402b;font-size:13px}
+body[data-page] .muted,body[data-page] .small-note,body[data-page] .modal-copy{color:#65625b}
+body[data-page] .badge,body[data-page] .tag{background:#ede9de;color:#655c4e;border-color:#ddd6c8}
+body[data-page] .chip{color:#5e5d59;border-color:#d7d2c5;background:#faf9f5;font-size:13px}
+body[data-page] .chip.selected{background:#f1dfd2;color:#813c28;border-color:#bd8266}
+body[data-page] textarea,body[data-page] .export-select{background:#fffefa;border-color:#d7d2c5;color:#292723}
+body[data-page] textarea::placeholder{color:#716e66}
+body[data-page] .today-primary>.card:first-child{background:#fffefa;border-color:#ddd7c9;box-shadow:none;border-radius:16px}
+body[data-page] .mood{background:#f5f2e9;color:#55534c;border-radius:12px}
+body[data-page] .mood:hover{background:#eee7dc}body[data-page] .mood.selected{background:#f3e0d2;border-color:#ae6848;color:#743c28}
+body[data-page] .home-companion{background:#ede6d9;border:1px solid #dfd6c7;border-radius:16px;box-shadow:none}
+body[data-page] .home-companion-copy{background:#ede6d9}body[data-page] .home-companion-copy h2{color:#39352d}
+body[data-page] .home-companion-copy p,body[data-page] .home-companion-copy .section-label{color:#665e50}
+body[data-page] .care-shortcuts button{border-color:#dcd6c9;color:#655644}
+body[data-page] .care-shortcuts small{color:#65625b}
+body[data-page] .compact-details.disclosure{background:#faf9f5;border-color:#d8d2c5}
+body[data-page] .disclosure-copy strong{color:#49443c}body[data-page] .disclosure-copy small{color:#65625b}
+body[data-page] .disclosure-icon{background:#eee7da;color:#8b5d41}
+body[data-page] .disclosure-action{background:#eae5d9;color:#554c40;border-color:#d5cdbd}
+body[data-page] .compact-details.disclosure[open]>summary{background:#eee9de;border-color:#ded6c7}
+body[data-page] .compact-details.disclosure>summary:hover{background:#f0ece2}
+body[data-page] .compact-details.disclosure>summary:focus-visible{outline-color:#995037}
+body[data-page] .entry{border-left-width:1px;border-radius:12px}
+body[data-page] .entry h3,body[data-page] .entry p{color:#4d4c48}body[data-page] .entry time{color:#65625b;font-size:12px}
+body[data-page] .insights-grid .card:first-child{background:#41493a;border-color:#41493a!important;color:#faf9f5}
+body[data-page] .insights-grid .card:first-child h2,body[data-page] .insights-grid .card:first-child .muted{color:#ecebdd}
+body[data-page] .insights-grid .card:first-child .stat-number{color:#faf9f5}
+body[data-page] .insights-grid .card:nth-child(2){background:#eeebe1}body[data-page] .insights-grid .card:nth-child(3){background:#e8ecdf}
+body[data-page] .insights-grid .card:not(:first-child) .stat-number{color:#52644d}
+body[data-page] .bar.last{background:#a36b52}body[data-page] .bar{background:#d5c8ad}
+body[data-page] .community-demo,body[data-page] .demo-banner{background:#efebe2;color:#65625b;border-color:#ded7c8;font-size:12px}
+body[data-page] .community-post .post-text{color:#514b53;font-size:14px}
+body[data-page] .community-post .post-header .muted,body[data-page] .post-bottom{color:#6e6671;font-size:12px}
+body[data-page] .reaction{color:#6a5377;font-size:12px;min-height:42px}
+body[data-page] .post-bottom button{color:#6a5377;font-size:12px}
+body[data-page] .support-tabs button,body[data-page] .companion-mode button{font-size:13px;color:#655c4e}
+body[data-page] .support-tabs button.active,body[data-page] .companion-mode button.active{background:#efe0d3;color:#813c28;border-color:#bd8266}
+body[data-page] .pet-interaction-panel{background:#faf6ed}body[data-page] .pet-response{color:#665342;font-size:13px}
+body[data-page] .pet-actions button{background:#fffefa;border-color:#ded3c2;color:#74533b}
+body[data-page] .pet-actions .action-label{font-size:12px!important}
+body[data-page] .chat-bubble p{font-size:14px;color:#49443c}
+body[data-page] .chat-card .small-note,body[data-page] .care-note{font-size:12px;color:#65625b}
+body[data-page] dialog{background:#faf9f5;border-color:#ded7c9;color:#292723;border-radius:16px}
+body[data-page] .modal-title,body[data-page] .tour-card h2{font-family:'Songti SC',Georgia,serif;color:#292723}
+body[data-page] .tour-card{background:#faf9f5;border-color:#d7d2c5}
+body[data-page] footer{color:#65625b}
+@media(max-width:800px){
+ body .sidebar{background:#faf9f5;border-top:1px solid #ded7c9;border-right:0}
+ body .nav{font-size:11px;color:#65625b}body .nav.active{background:#f0dfd1;color:#813c28}
+ body .mobile-brand{color:#a74d32}
+ body[data-page] .heading .page-title{font-size:27px;line-height:1.45}
+ body[data-page] .subtitle{font-size:13px}
+ body[data-page] .mood{font-size:12px}
+ body[data-page] .card{border-radius:13px}
+ body[data-page] .insights-grid h2,body[data-page] .insights-grid .muted{font-size:12px;white-space:normal}
+ body[data-page] .pet-actions .action-label{font-size:11px!important}
+ body[data-page] .pet-response{font-size:12px}
+ body[data-page] .community-compose{font-size:13px!important}
+ body[data-page] .section-label{font-size:12px;letter-spacing:0}
+ body[data-page] dialog{border-radius:16px 16px 0 0}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+@media(max-width:800px){body[data-page] .companion-mode{display:flex;width:100%}body[data-page] .companion-mode button{flex:1;white-space:nowrap;padding:10px 12px}}
