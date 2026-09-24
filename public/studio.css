@@ -190,3 +190,14 @@ body[data-page] .compact-details.disclosure>summary:focus-visible{outline:3px so
 @media(hover:hover){body[data-page] .compact-details.disclosure>summary:hover{background:#f0f6e9}.disclosure>summary:hover .disclosure-action{background:#e1edd3;border-color:#a7bd91}}
 @media(max-width:800px){body[data-page] .compact-details.disclosure>summary{padding:14px 12px;gap:9px;grid-template-columns:29px minmax(0,1fr) auto;min-height:74px}.disclosure-copy strong{font-size:14px}.disclosure-copy small{font-size:12px}.disclosure-icon{width:29px;height:33px}.disclosure-icon .ui-icon{height:19px;width:19px}.disclosure-action{padding:7px 6px;font-size:12px;gap:2px}.disclosure-action svg{width:14px;height:14px}body[data-page] .record-extra.disclosure>summary{grid-template-columns:minmax(0,1fr) auto}.record-extra.disclosure>summary>.disclosure-icon{display:none}}
 @media(prefers-reduced-motion:reduce){.disclosure-action svg{transition:none}}
+
+/* Community guidance stays visible alongside the conversation. */
+body[data-page=community] .community-aside{display:grid;grid-template-columns:1fr;gap:14px}
+body[data-page=community] .community-aside .card{padding:22px;border-radius:14px}
+body[data-page=community] .community-aside .section-label{display:none}
+body[data-page=community] .community-aside h2{margin:0 0 12px;font-size:18px}
+body[data-page=community] .community-aside p,body[data-page=community] .community-aside li{font-size:14px;line-height:1.8;color:#596451}
+body[data-page=community] .community-aside ul{margin:12px 0 18px}
+body[data-page=community] .community-aside button{font-size:13px;min-height:42px}
+@media(min-width:801px){body[data-page=community] .community-layout{grid-template-columns:minmax(0,1.8fr) minmax(280px,1fr)}body[data-page=community] .community-aside{position:sticky;top:20px}}
+@media(max-width:800px){body[data-page=community] .community-aside{display:contents}body[data-page=community] .community-welcome{order:-1}body[data-page=community] .community-aside .card{padding:16px}body[data-page=community] .community-aside h2{font-size:16px;margin-bottom:8px}body[data-page=community] .community-aside p{margin:8px 0}body[data-page=community] .community-aside ul{margin:8px 0 12px}body[data-page=community] .community-rest,body[data-page=community] #restore-hidden{order:1}}

@@ -5,7 +5,6 @@ const DISCLOSURE_COPY={
  '看看这一周的心情':['insights','这一周的心情','查看近 7 天的情绪变化'],
  '其他放松方式与温柔提醒':['breath','更多放松与关怀','呼吸练习 · 环境声音 · 今日寄语'],
  '查看影响因素与行动建议':['insights','影响因素与行动建议','看看哪些事情影响心情，选一个小行动'],
- '社区约定与内容管理':['community','社区约定与内容管理','了解分享约定与审核演示'],
  '陪伴说明与更多支持':['care','陪伴说明与更多支持','了解陪伴方式，寻找适合自己的支持'],
  '回看反馈与更多关怀':['care','回看反馈与更多关怀','查看练习后的感受与其他关怀方式'],
  '提醒偏好与功能说明':['plan','提醒偏好与功能说明','设置示例提醒，了解功能边界'],
@@ -40,7 +39,7 @@ function compactLayout(){
   const detail=main.querySelector('.bottom-row');if(detail)compactDetails('查看影响因素与行动建议',[detail]);
  }
  if(page==='community'){
-  compactPages('.community-post',2,'community');const aside=main.querySelector('.community-aside');if(aside)compactDetails('社区约定与内容管理',[aside],'community-guide');
+  compactPages('.community-post',2,'community');
   main.querySelectorAll('.post-text').forEach(p=>{if(p.textContent.length>140&&!p.closest('details'))compactDetails('展开完整心情',[p],'entry-full')});
  }
  if(page==='care'){
