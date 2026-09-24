@@ -4,19 +4,41 @@ let tourStep=0,tourOrigin='today',tourSeen=false,tourAdoptionPhase=null;
 let tourPetDraft={look:'apricot',name:''};
 try{tourSeen=localStorage.getItem(TOUR_KEY)==='seen'}catch{}
 const TOUR_STEPS=[
- {page:'record',target:'.moods',title:'01 · 记下此刻的心情',text:'选一个心情就能保存。愿意的话，再标记影响因素或写两句，留给以后的自己回看。'},
- {page:'care',tab:'chat',pane:'room',target:'.companion-chat-entry [data-open-pet-chat],.adoption-intro [data-adopt-start]',pet:true,title:'02 · 找小猫陪你聊聊',text:'可以认养、起名，和小猫聊心事或玩耍。也可以以后再来，页面边上就能找到它。聊天目前为本地模拟。'},
- {page:'insights',target:'.insight-navigation',title:'03 · 看见情绪背后的线索',text:'回看哪些情境常伴随你的情绪，再梳理一次经历中的感受与需要。还没记录？可以先看示例。'},
- {page:'care',tab:'exercises',target:'.tailored-options',title:'04 · 给自己一点放松',text:'按此刻的困扰，试试呼吸、声音或舒展练习。建议可以更换，随时都能停下。剩下的空间，留给你慢慢探索。'}
+ {page:'record',target:'.moods',action:'[data-mood]',title:'01 · 选一个此刻的心情',text:'点选下方最接近你的心情。这里只保留为草稿，点「保存此刻」才会写入日记。',done:'心情已经选好了。以后可以再添一点情境或文字，然后保存。'},
+ {page:'care',tab:'chat',pane:'room',target:'.companion-chat-entry [data-open-pet-chat],.adoption-intro [data-adopt-start]',action:'[data-adopt-start],[data-open-pet-chat]',title:'02 · 认识你的陪伴小猫',text:'点击亮起的按钮，选一只小猫，或和已有的小猫聊聊。不想认养，也可以跳过这一步。',done:'已经打开小猫的聊天空间，想说什么时都可以来。'},
+ {page:'insights',target:'#toggle-demo',action:'#toggle-demo',title:'03 · 找一条情绪线索',text:'点击「体验示例分析」，再选一个情境，看看它对应的心情记录。示例不会存进你的日记。',done:'这些记录帮你回看情境与心情如何一起出现；它们是线索，不是原因的定论。'},
+ {page:'care',tab:'exercises',target:'.tailored-options',action:'[data-care-concern]',title:'04 · 试试适合此刻的关怀',text:'点击一个接近你的困扰，让建议为你展开。你可以更换方向，随时停下。',done:'建议已经展开。点击亮起的练习按钮，就能开始体验；也可以先到这里。'}
 ];
-function finishTour(start=false){tourAdoptionPhase=null;tourSeen=true;try{localStorage.setItem(TOUR_KEY,'seen')}catch{};const dialog=document.querySelector('#feature-tour');dialog.close();go(start?'record':tourOrigin);scheduleGuestInvite();if(start)document.querySelector('.mood')?.focus({preventScroll:true});else document.querySelector('#open-guide')?.focus({preventScroll:true})}
-function positionTour(){const dialog=document.querySelector('#feature-tour');if(!dialog?.open)return;if(tourAdoptionPhase)return;const target=document.querySelector(TOUR_STEPS[tourStep].target),card=dialog.querySelector('.tour-card');if(!target||!card)return;const r=target.getBoundingClientRect(),w=innerWidth,h=innerHeight,gap=9;const left=Math.max(8,r.left-gap),right=Math.min(w-8,r.right+gap),top=Math.max(8,r.top-gap),bottom=Math.min(h-8,r.bottom+gap);const focus=dialog.querySelector('.tour-focus');Object.assign(focus.style,{left:left+'px',top:top+'px',width:Math.max(0,right-left)+'px',height:Math.max(0,bottom-top)+'px'});const shade=dialog.querySelectorAll('.tour-shade');const rects=[[0,0,w,top],[0,top,left,bottom-top],[right,top,w-right,bottom-top],[0,bottom,w,h-bottom]];shade.forEach((s,i)=>{const[x,y,width,height]=rects[i];Object.assign(s.style,{left:x+'px',top:y+'px',width:width+'px',height:height+'px'})});const ch=card.offsetHeight,cw=card.offsetWidth;let y=bottom+16;if(y+ch>h-16)y=top-ch-16;if(y<12)y=Math.max(12,h-ch-16);const x=Math.max(12,Math.min(left,w-cw-12));Object.assign(card.style,{left:x+'px',top:y+'px'});}
-function tourView(){tourAdoptionPhase=null;document.querySelector('#feature-tour').classList.remove('tour-adopting');const step=TOUR_STEPS[tourStep];if(step.tab)supportTab=step.tab;if(step.pane)companionPane=step.pane;go(step.page);document.querySelector('#main').getAnimations().forEach(a=>a.finish());document.querySelector(step.target)?.scrollIntoView({block:'center',behavior:'instant'});const dialog=document.querySelector('#feature-tour');dialog.innerHTML=`<div class="tour-shade"></div><div class="tour-shade"></div><div class="tour-shade"></div><div class="tour-shade"></div><div class="tour-focus" aria-hidden="true"></div><section class="tour-card"><div class="tour-top"><span>跟着慢慢，逛一逛 · ${tourStep+1} / ${TOUR_STEPS.length}</span><button type="button" id="tour-skip">跳过引导 ×</button></div><div class="tour-progress" aria-hidden="true">${TOUR_STEPS.map((_,i)=>`<i class="${i<=tourStep?'done':''}"></i>`).join('')}</div><h2 id="tour-title" tabindex="-1">${step.title}</h2><p>${step.text}</p>${step.pet?`<button type="button" class="primary full tour-optional-pet" id="tour-optional-pet">${adoptedPet?'和小猫打个招呼':'现在认养一只小猫'}</button>`:''}<div class="tour-actions">${tourStep?'<button type="button" class="secondary" id="tour-back">上一步</button>':'<small>跟着看看，随时可以跳过</small>'}<button type="button" class="primary" id="tour-next">${tourStep===TOUR_STEPS.length-1?'开始记录心情':step.pet?'继续了解功能':'下一步'} ${uiIcon('arrow')}</button></div></section>`;dialog.querySelector('#tour-skip').onclick=()=>finishTour();dialog.querySelector('#tour-next').onclick=()=>{if(tourStep===TOUR_STEPS.length-1)finishTour(true);else{tourStep++;tourView()}};dialog.querySelector('#tour-optional-pet')?.addEventListener('click',()=>{tourPetDraft={look:'apricot',name:''};tourAdoptionPhase=adoptedPet?'hello':'look';tourAdoptionView()});const back=dialog.querySelector('#tour-back');if(back)back.onclick=()=>{tourStep--;tourView()};requestAnimationFrame(()=>{positionTour();dialog.querySelector('#tour-title')?.focus({preventScroll:true})});}
-function openTour(){
- tourOrigin=page;tourStep=0;
- const dialog=document.querySelector('#feature-tour');
- tourView();
- dialog.showModal();positionTour();dialog.querySelector('#tour-title').focus({preventScroll:true});
+let tourActive=false,tourDone=false,tourSubstep=false;
+function clearTourTarget(){document.querySelectorAll('.tour-action-target').forEach(e=>e.classList.remove('tour-action-target'))}
+function finishTour(start=false,stay=false){tourActive=false;tourAdoptionPhase=null;clearTourTarget();tourSeen=true;try{localStorage.setItem(TOUR_KEY,'seen')}catch{};const dialog=document.querySelector('#feature-tour');dialog.close();if(!stay)go(start?'record':tourOrigin);scheduleGuestInvite();if(!stay)document.querySelector(start?'.mood':'#open-guide')?.focus({preventScroll:true})}
+function activeTourTarget(){if(tourStep===2&&tourSubstep)return '.trigger-list';if(tourStep===3&&tourDone)return '[data-tailored-action]';return TOUR_STEPS[tourStep].target}
+function positionTour(){const dialog=document.querySelector('#feature-tour');if(!dialog?.open||tourAdoptionPhase)return;const target=document.querySelector(activeTourTarget())||document.querySelector('#main h1'),card=dialog.querySelector('.tour-card');if(!target||!card)return;const r=target.getBoundingClientRect(),w=innerWidth,h=innerHeight,gap=9;const left=Math.max(8,r.left-gap),right=Math.min(w-8,r.right+gap),top=Math.max(8,r.top-gap),bottom=Math.min(h-8,r.bottom+gap);const focus=dialog.querySelector('.tour-focus');Object.assign(focus.style,{left:left+'px',top:top+'px',width:Math.max(0,right-left)+'px',height:Math.max(0,bottom-top)+'px'});const rects=[[0,0,w,top],[0,top,left,bottom-top],[right,top,w-right,bottom-top],[0,bottom,w,h-bottom]];dialog.querySelectorAll('.tour-shade').forEach((e,i)=>{const[x,y,width,height]=rects[i];Object.assign(e.style,{left:x+'px',top:y+'px',width:Math.max(0,width)+'px',height:Math.max(0,height)+'px'})});const cue=dialog.querySelector('.tour-point-hint');if(cue){const cw=cue.offsetWidth;Object.assign(cue.style,{left:Math.max(8,Math.min(left,w-cw-8))+'px',top:(top>48?top-cue.offsetHeight-8:bottom+8)+'px'})}const ch=card.offsetHeight,cw=card.offsetWidth;let y=bottom+48;if(y+ch>h-12)y=top-ch-14;if(y<12)y=Math.max(12,h-ch-12);Object.assign(card.style,{left:Math.max(12,Math.min(left,w-cw-12))+'px',top:y+'px'});}
+function tourCard(){
+ clearTourTarget();const dialog=document.querySelector('#feature-tour'),step=TOUR_STEPS[tourStep];
+ const cueText=tourStep===0?'点这里，选一个心情':tourStep===1?'点这里，认识小猫':tourStep===2?(tourSubstep?'选一个情境，找找线索':'点这里，看看示例'):(tourDone?'点这里，开始放松':'点这里，选一种困扰');
+ const copy=tourDone?step.done:tourStep===2&&tourSubstep?'示例已展开。点选一个亮起的情境，看看当时发生了什么。':step.text;
+ dialog.innerHTML=`<div class="tour-shade"></div><div class="tour-shade"></div><div class="tour-shade"></div><div class="tour-shade"></div><div class="tour-focus" aria-hidden="true"></div>${!tourDone||tourStep===3?`<div class="tour-point-hint">${uiIcon('arrow')}<span>${cueText}</span></div>`:''}<section class="tour-card"><div class="tour-top"><span>亲手试一试 · ${tourStep+1} / 4</span><button type="button" id="tour-skip">跳过引导 ×</button></div><div class="tour-progress" aria-hidden="true">${TOUR_STEPS.map((_,i)=>`<i class="${i<=tourStep?'done':''}"></i>`).join('')}</div><h2 id="tour-title" tabindex="-1">${step.title}</h2><p role="status">${copy}</p><div class="tour-actions">${tourDone?`<span class="tour-complete">已体验</span>${tourStep<3?'<button class="primary" id="tour-next">继续体验 →</button>':'<button class="secondary" id="tour-end">完成引导</button>'}`:`<span class="tour-action-hint">请点击页面上亮起的按钮</span><button class="link-button" id="tour-step-skip">跳过这一步</button>`}</div></section>`;
+ dialog.querySelector('#tour-skip').onclick=()=>finishTour();
+ dialog.querySelector('#tour-step-skip')?.addEventListener('click',()=>{if(tourStep===3)finishTour(false,true);else{tourStep++;tourView()}});
+ dialog.querySelector('#tour-next')?.addEventListener('click',()=>{tourStep++;tourView()});
+ dialog.querySelector('#tour-end')?.addEventListener('click',()=>finishTour(false,true));
+ const target=document.querySelector(activeTourTarget());if(!tourDone||tourStep===3)target?.classList.add('tour-action-target');target?.scrollIntoView({block:'center',behavior:'instant'});
+ requestAnimationFrame(()=>{positionTour();if(!tourDone){const control=target?.matches('button')?target:target?.querySelector('button');control?.focus({preventScroll:true})}else dialog.querySelector('#tour-title')?.focus({preventScroll:true})});
+}
+function tourView(){tourAdoptionPhase=null;tourDone=false;tourSubstep=false;const dialog=document.querySelector('#feature-tour');dialog.classList.remove('tour-adopting');if(dialog.open){dialog.close();dialog.show()}const step=TOUR_STEPS[tourStep];if(step.tab)supportTab=step.tab;if(step.pane)companionPane=step.pane;if(tourStep===1)adoptionStep=0;if(tourStep===2){insightView='patterns';demo=false}go(step.page);document.querySelector('#main').getAnimations().forEach(a=>a.finish());tourCard()}
+function openTour(){tourOrigin=page;tourStep=0;tourActive=true;tourView();document.querySelector('#feature-tour').show();positionTour()}
+function onTourAction(event){
+ if(!tourActive||tourAdoptionPhase||event.target.closest('#feature-tour'))return;
+ const action=tourStep===2&&tourSubstep?'[data-insight-factor]':tourStep===3&&tourDone?'[data-tailored-action]':TOUR_STEPS[tourStep].action;
+ if(!event.target.closest(action)||tourDone&&tourStep!==3)return;
+ if(tourStep===3&&tourDone){finishTour(false,true);return}
+ setTimeout(()=>{
+  if(!tourActive)return;
+  if(tourStep===1&&!adoptedPet){clearTourTarget();tourPetDraft={look:'apricot',name:''};tourAdoptionPhase='look';const dialog=document.querySelector('#feature-tour');dialog.close();tourAdoptionView();dialog.showModal();dialog.querySelector('#tour-title').focus();return}
+  if(tourStep===2&&!tourSubstep){tourSubstep=true;tourCard();return}
+  tourDone=true;tourCard();
+ },0);
 }
 function tourAdoptionView(){
  const dialog=document.querySelector('#feature-tour'),phase=tourAdoptionPhase,look=petLook(tourPetDraft.look);
@@ -28,7 +50,7 @@ function tourAdoptionView(){
  else content=`<h2 id="tour-title" tabindex="-1">${escape(petName())}，欢迎回家。</h2><p class="tour-pet-copy">从现在起，页面边上的小猫就是你的伙伴。</p><button type="button" class="tour-pet-greet" id="tour-pet-touch" aria-label="摸摸${escape(petName())}">${petDrawing(0)}</button><p id="tour-pet-response" class="tour-pet-response" aria-live="polite">轻轻摸摸它，打个招呼吧。</p><p class="tour-pet-note">点页面边上的小猫，就能聊天或玩耍。<br>聊天目前为本地模拟，尚未接入真实 AI。</p><button type="button" class="primary full" id="tour-pet-continue">带着${escape(petName())}，继续认识慢慢 ${uiIcon('arrow')}</button><button type="button" class="link-button full" id="tour-pet-chat">想先和它说句话</button>`;
  dialog.innerHTML=`<section class="tour-adopt-card"><div class="tour-top"><span>初次见面 · ${n} / 3</span><button type="button" id="tour-skip">${adoptedPet?'结束引导':'暂时跳过'}</button></div><div class="tour-progress" aria-hidden="true">${[1,2,3].map(i=>`<i class="${i<=n?'done':''}"></i>`).join('')}</div><div class="tour-adopt-content">${content}</div>${phase!=='hello'?'<button type="button" class="link-button full" id="tour-without-pet">先了解功能，以后再认养</button>':''}</section>`;
  dialog.querySelector('#tour-skip').onclick=()=>{tourAdoptionPhase=null;finishTour()};
- dialog.querySelector('#tour-without-pet')?.addEventListener('click',()=>tourView());
+ dialog.querySelector('#tour-without-pet')?.addEventListener('click',()=>{tourStep++;tourView()});
  dialog.querySelectorAll('[data-tour-look]').forEach(b=>b.onclick=()=>{tourPetDraft.look=b.dataset.tourLook;dialog.querySelectorAll('[data-tour-look]').forEach(x=>{const selected=x===b;x.setAttribute('aria-pressed',selected);x.querySelector('.tour-look-state').textContent=selected?'已选择':'选这只'})});
  dialog.querySelector('#tour-pet-next')?.addEventListener('click',()=>{tourAdoptionPhase='name';tourAdoptionView()});
  dialog.querySelector('#tour-pet-back')?.addEventListener('click',()=>{tourAdoptionPhase='look';tourAdoptionView()});
@@ -39,4 +61,17 @@ function tourAdoptionView(){
  dialog.querySelector('#tour-pet-chat')?.addEventListener('click',()=>{tourAdoptionPhase=null;finishTour();supportTab='chat';companionPane='talk';go('care')});
  dialog.scrollTop=0;if(dialog.open)dialog.querySelector('#tour-title').focus({preventScroll:true});
 }
-function initTour(auto=true){const dialog=document.createElement('dialog');dialog.id='feature-tour';dialog.setAttribute('aria-labelledby','tour-title');document.body.append(dialog);dialog.addEventListener('cancel',e=>{e.preventDefault();finishTour()});window.addEventListener('resize',positionTour);window.addEventListener('scroll',positionTour,{passive:true});document.querySelector('#open-guide').onclick=openTour;if(auto&&!tourSeen)openTour()}
+function initTour(auto=true){const dialog=document.createElement('dialog');dialog.id='feature-tour';dialog.setAttribute('aria-labelledby','tour-title');document.addEventListener('click',onTourAction,true);document.body.append(dialog);dialog.addEventListener('cancel',e=>{e.preventDefault();finishTour()});window.addEventListener('resize',positionTour);window.addEventListener('scroll',positionTour,{passive:true});document.querySelector('#open-guide').onclick=openTour;if(auto&&!tourSeen)openTour()}
+
+// Keep keyboard exploration on the highlighted action and its coaching controls.
+document.addEventListener('keydown',event=>{
+ if(!tourActive||tourAdoptionPhase)return;
+ if(event.key==='Escape'){event.preventDefault();finishTour();return}
+ if(event.key!=='Tab')return;
+ const target=document.querySelector(activeTourTarget()),card=document.querySelector('#feature-tour .tour-card');
+ const actions=target?(target.matches('button')?[target]:[...target.querySelectorAll('button')]):[];
+ const controls=[...actions,...(card?.querySelectorAll('button')||[])].filter(e=>!e.disabled&&e.getClientRects().length);
+ if(!controls.length)return;
+ const current=controls.indexOf(document.activeElement),next=event.shiftKey?(current<=0?controls.length-1:current-1):(current+1)%controls.length;
+ event.preventDefault();controls[next].focus({preventScroll:true});
+});
