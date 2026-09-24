@@ -49,3 +49,5 @@ footer{max-width:1200px;border-top:1px solid #e5e9df;margin:28px auto 0;padding:
 
 /* Keep the floating companion clear of the room's secondary controls. */
 @media(max-width:800px){body[data-care-view=room] .pet-scene-bottom{padding-right:65px}.sidebar-art{display:none}.header-location strong{color:#6d7e62}.subtitle{color:#708064}.pet-response{color:#657957}.pet-actions .action-label{font-size:10px!important}.post-bottom{color:#87778f}.care-shortcuts small{font-size:9px}.pet-scene-bottom button{font-size:10px}.pet-interaction-panel{padding-top:12px}}
+
+@media(min-width:801px){body[data-care-view=room] #pet-dock{top:93px;bottom:auto;transform:scale(.85);transform-origin:top right}body[data-care-view=room] .dock-menu{bottom:auto;top:140px}}
