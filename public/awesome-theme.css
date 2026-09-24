@@ -248,3 +248,15 @@ body[data-page=insights] .trend-disclosure{margin:0 0 16px}
 .reflection-example dl{margin:0}.reflection-example dl>div{padding:10px 0;border-top:1px solid #cbd3bf}.reflection-example dt{font-size:12px;font-weight:600;color:#58634f;margin-bottom:4px}.reflection-example dd{margin:0;font-size:14px;line-height:1.7}
 .reflection-example-takeaway{font-size:13px;line-height:1.8;margin:14px 0}.reflection-example button{width:100%;min-height:44px}
 @media(max-width:1000px){.reflection-workspace{grid-template-columns:1fr}.reflection-example{grid-column:1;grid-row:1;padding:18px}.reflection-workspace>.reflection-card{grid-column:1;grid-row:2}.reflection-example dl{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}.reflection-example h2{font-size:18px}.reflection-example-takeaway{margin:10px 0}.reflection-example button{width:auto}.reflection-example dd{font-size:13px}}
+
+/* Keep the optional trigger input on the recording surface. */
+.today-factors{margin:4px 0 18px;padding:16px;background:#f3f5ee;border-radius:12px}
+.today-factors .label-row{margin:0 0 10px}.today-factors .chips{margin:0}
+.diary-reflection{margin:12px 0;padding:14px 16px;background:#f0f2e9;border-radius:10px}.diary-reflection strong{color:#3f5841;font-size:13px}.diary-reflection p{margin:6px 0 0;white-space:pre-wrap;line-height:1.7}
+.reflection-result textarea{display:block;width:100%;margin:8px 0;font:inherit;line-height:1.7}
+.reflection-recommendation{padding:16px 18px;background:#eef1e6;border-radius:10px;margin:16px 0;color:#3f5740}.reflection-recommendation p{margin:8px 0}.reflection-recommendation small{line-height:1.6}
+#reflection-save{margin-top:4px}.after-save-more{margin-top:16px}.after-save-more summary{cursor:pointer;padding:10px;color:#536a50}.after-save-more>div{display:grid;gap:8px;margin-top:8px}
+@media(max-width:1000px){.reflection-example dl>div{display:none}.reflection-example.example-step-0 .example-moment,.reflection-example.example-step-1 .example-feeling,.reflection-example.example-step-1 .example-need,.reflection-example.example-step-2 .example-support{display:block}.reflection-example dl{display:block}.reflection-example-takeaway{display:none}.reflection-example.example-step-2 .reflection-example-takeaway{display:block}}
+@media(max-width:700px){.today-factors{padding:12px;margin:0 0 12px}.today-factors .chips{display:flex;flex-wrap:wrap;gap:6px}.today-factors .chip{min-height:38px;font-size:12px}.reflection-example{margin-bottom:0}.reflection-example h2{font-size:16px}.reflection-example-note{margin:0 0 8px}.reflection-example dl>div{padding:7px 0}.reflection-example .secondary{min-height:38px}}
+
+@media(max-width:700px){body[data-page=today] #pet-dock{display:none}}
