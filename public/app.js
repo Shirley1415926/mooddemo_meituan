@@ -32,4 +32,4 @@ function startCare(type,duration=3,planId=null){if($('#modal').open)closeModal()
 $('#privacy').onclick=()=>openModal('<h2 class="modal-title">你的心事，只留在这里</h2><p class="modal-copy">日记保存在当前设备的当前浏览器中，不会上传到服务器，也不会用于公开展示。不同设备、浏览器和访问域名之间不会同步。</p><p class="modal-copy">清除浏览器数据或使用无痕模式，可能导致记录丢失。你可以在「情绪日记」中导出备份。使用共用设备时，请注意本地记录可被同一浏览器的其他使用者看到。</p><p class="small-note">趋势和建议来自你选择的情绪与标签，只帮助自我觉察，不提供诊断。若情绪持续影响日常生活，可以向信任的人或专业人员寻求支持。</p>');
 page=['today','journal','insights','care','community'].includes(location.hash.slice(1))?location.hash.slice(1):'today';render();
 
-initGuide();
+initTour();
