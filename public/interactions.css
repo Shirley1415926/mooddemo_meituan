@@ -1,0 +1,30 @@
+/* Tactile feedback: soft surfaces depress on touch and settle on release. */
+:root{--touch-ease:cubic-bezier(.16,1,.3,1);--touch-ink:#465b38;--touch-shadow:rgba(49,56,39,.16)}
+:where(button,summary,.nav){-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button:not(:disabled),summary,.nav{transition:background-color 180ms ease,color 180ms ease,border-color 180ms ease,box-shadow 180ms ease,translate 160ms var(--touch-ease),scale 160ms var(--touch-ease),filter 160ms ease;}
+button:not(:disabled):not([aria-disabled=true]):is(:active,.is-pressing),summary:active,.nav:active{transform:none;translate:0 2px;scale:.98;filter:brightness(.96);box-shadow:inset 0 2px 5px var(--touch-shadow);transition-duration:80ms}
+.primary:not(:disabled):is(:active,.is-pressing){background-color:#783c2a!important;box-shadow:inset 0 3px 6px #40231640;color:#fff}
+.secondary:not(:disabled):is(:active,.is-pressing),.chip:not(:disabled):is(:active,.is-pressing),.home-destinations button:is(:active,.is-pressing){background-color:#e5e9dc}
+button:disabled,button[aria-disabled=true]{cursor:not-allowed;filter:none;translate:none;scale:1}
+.link-button:not(:disabled):is(:active,.is-pressing),.tour-top button:is(:active,.is-pressing){box-shadow:none;color:#79422e;background-color:#eee7dc}
+.nav{border-radius:12px}.nav:active{background-color:#e2e8d8;color:#405333}
+input:not([type=range]),textarea,select{transition:border-color 180ms ease,background-color 180ms ease,box-shadow 180ms ease;caret-color:#8e4934}
+input:not([type=range]):focus-visible,textarea:focus-visible,select:focus-visible{border-color:#72865d;background-color:#fffefa;outline:2px solid #72865d;outline-offset:2px}
+button:focus-visible,summary:focus-visible,.nav:focus-visible{outline:3px solid #72865d;outline-offset:3px}
+button .ui-icon{transition:translate 180ms var(--touch-ease)}
+@media(hover:hover) and (pointer:fine){
+ .primary:not(:disabled):hover{background-color:#92472f;box-shadow:0 4px 12px #663f2820}
+ .secondary:not(:disabled):hover,.home-destinations button:hover{background-color:#f0f2e9;border-color:#aebc9b;box-shadow:0 4px 12px #36452d0c}
+ .chip:not(:disabled):hover{border-color:#91a57b}
+ .primary:not(:disabled):hover .ui-icon:last-child{translate:2px 0}
+}
+/* Preserve each selected state; an extra depth cue makes activation legible. */
+:is(.support-tabs,.companion-mode,.insight-navigation) button[aria-pressed=true]{box-shadow:0 2px 7px #35452a12}
+#feature-tour.tour-adopting .tour-adopt-card{animation:adoption-arrival 400ms var(--touch-ease)}
+@keyframes adoption-arrival{from{opacity:.55;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+ button:not(:disabled),summary,.nav,input,textarea,select,button .ui-icon{transition:none!important}
+ button:not(:disabled):is(:active,.is-pressing),summary:active,.nav:active{translate:none;scale:1;transform:none!important}
+ .primary:not(:disabled):hover .ui-icon:last-child{translate:none}
+ #feature-tour.tour-adopting .tour-adopt-card{animation:none}
+}

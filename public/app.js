@@ -39,3 +39,4 @@ page=['today','record','journal','insights','care','community'].includes(locatio
 
 initTour(false);
 initStartPage();
+if(page!=='today'&&!tourSeen&&!adoptedPet)openTour();
