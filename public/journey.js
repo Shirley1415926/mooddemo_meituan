@@ -11,20 +11,25 @@ function finishCare(completed){const session=activeCare;if(!session)return;activ
 }
 function feedbackHistory(){return `<section class="card feedback-history"><h2>哪些方式，曾经适合你</h2><p class="small-note">只记录你自愿留下的体验，不据此推断效果。</p>${(support.feedback||[]).length?(support.feedback||[]).slice(0,4).map(f=>`<div class="feedback-row"><span>${({sound:'声音聆听',breath:'自然呼吸',move:'轻松舒展'})[f.type]||'关怀练习'} · ${escape(f.feeling)}</span><small>${new Date(f.date).toLocaleDateString('zh-CN')} · ${f.completed?'完成':'提前结束'}</small></div>`).join(''):'<p class="muted">练习后可以留下感受，也可以选择不评价。</p>'}</section>`}
 function petMemory(){openModal(`<span class="section-label">只记住你愿意留下的事</span><h2 class="modal-title">我们的小小默契</h2><form id="pet-memory-form"><label class="community-check"><input type="checkbox" id="memory-enabled" ${support.memory?.enabled?'checked':''}>允许在本浏览器记住以下偏好</label><label for="memory-name" class="label-row">希望怎么称呼你（选填）</label><input id="memory-name" class="export-select" maxlength="16" value="${escape(support.memory?.name||'')}" placeholder="一个喜欢的昵称"><label for="memory-preference" class="label-row">你偏好的陪伴方式</label><select id="memory-preference" class="export-select"><option value="listen" ${support.memory?.preference==='listen'?'selected':''}>先听我说</option><option value="sound" ${support.memory?.preference==='sound'?'selected':''}>一起听声音</option><option value="move" ${support.memory?.preference==='move'?'selected':''}>轻轻舒展</option></select><p class="small-note">不自动记住聊天原文、日记、健康或日历信息。关闭记忆会清除昵称和偏好；当前对话刷新即清除。</p><button class="primary full">保存我的选择</button><button type="button" class="link-button full" id="forget-memory">忘记这些偏好</button></form>`);$('#pet-memory-form').onsubmit=e=>{e.preventDefault();if(supportUpdate(()=>support.memory=$('#memory-enabled').checked?{enabled:true,name:$('#memory-name').value.trim(),preference:$('#memory-preference').value}:{enabled:false})){closeModal();render();toast('记忆设置已更新')}};$('#forget-memory').onclick=()=>{if(supportUpdate(()=>support.memory={enabled:false})){closeModal();render();toast('昵称和偏好已清除')}}}
-function petGreeting(){const name=support.memory?.enabled&&support.memory.name?escape(support.memory.name)+'，':'';return name+'我是'+escape(petName())+'。此刻最想被听见的，是什么？我们可以先聊聊，也可以一起找个小行动。'}
+function petGreeting(){const name=support.memory?.enabled&&support.memory.name?escape(support.memory.name)+'，':'';return name+'我在呢，给你留了个位置。今天过得怎么样？'}
 function sendSupportChat(text){text=text.trim().slice(0,500);if(!text)return;let reply;const prior=petTopic;petTurn++;
- if(/自杀|自残|不想活|结束生命|伤害自己/.test(text)){petTopic='support';reply='听起来你此刻很难熬。这个演示无法提供即时危机支持。如果你可能马上伤害自己，请立即联系当地紧急救助，并请一位可信任的人来陪你，尽量不要独处。';}
- else if(/不想.*计划|不想.*做|不想.*说|不要.*建议|不愿意|不需要/.test(text)){petTopic='rest';reply='好，我们先不安排任何事情。你不用为了我完成任务。想安静一会儿，或是换个话题，都由你决定。';}
- else if(/好久|回来|想你/.test(text)){petTopic='return';reply=(support.memory?.enabled&&support.memory.name?support.memory.name+'，':'')+'好久不见，很高兴你又来了。有点想和你聊聊天，但你不用补上缺席的日子。今天想从哪里开始？';}
- else if(/开心|高兴|好消息|成功|通过了/.test(text)){petTopic='happy';reply='听起来有件让你开心的事！我也想陪你把这一刻多留一会儿。最想记住的是哪个小细节？';}
- else if(/休息|音乐|声音|试试|可以做|小行动/.test(text)||chatMode==='action'){petTopic='action';reply=prior==='action'?'我们把它缩小一点：只留一分钟，怎么样？可以点下方「一起选个小行动」，自己选时长；如果现在不想做，也可以。':'如果你愿意，我们可以从一个很小的行动开始。你现在能接受一分钟，还是想多休息一会儿？下面的按钮可以按你的时间和偏好安排。';}
- else if(/工作|考试|事情太多|压力|忙|面试/.test(text)){petTopic='pressure';reply=prior==='pressure'?'接着刚才的压力说，你希望先被理解，还是一起分清“现在要做的”和“可以稍后做的”？我们不用一次解决全部。':'事情都挤在一起时，喘口气也不容易。现在最占据你心思的是哪一件？我先听，不急着帮你排计划。';}
- else if(/难过|低落|伤心|孤独/.test(text)){petTopic='sad';reply=prior==='sad'?'我还在听。你刚才说的难过，可以先放在这里。此刻更需要有人陪着，还是希望找一个让身体舒服一点的方式？':'谢谢你把这份感受告诉我。不用急着变开心。是今天某个瞬间让你难过，还是已经积攒了一段时间？';}
- else if(prior==='sad')reply='接着你刚才提到的难过，我想多听一点这件事对你的意义。你更在意发生了什么，还是自己当时没有被理解？';
- else if(prior==='pressure')reply='你刚才说到那些压力。先不急着解决，哪一部分是你希望别人知道、却还没说出来的？';
- else reply=petTurn%2?'我看到你写下的话了。你希望我先陪你说说感受，还是一起找一个小小的休息方式？':'这次我们可以慢一点。你刚才说的事情里，有没有一个细节，是最希望被听见的？';
+ if(/自杀|自残|不想活|结束生命|伤害自己/.test(text)){petTopic='support';reply='听起来你现在很难熬。这个演示不能提供即时救助。如果你可能马上伤害自己，请联系当地紧急救助，并让一位可信任的人来陪你，尽量不要独处。';}
+ else if(/不想.*计划|不想.*做|不想.*说|不要.*建议|不愿意|不需要/.test(text)){petTopic='rest';reply='好，那就先不做。我趴在这里陪你，想说话时再叫我。';}
+ else if(/好久|回来|想你/.test(text)){petTopic='return';reply='你回来啦，蹭蹭你的手。今天想跟我说点什么？';}
+ else if(/开心|高兴|好消息|成功|通过了/.test(text)){petTopic='happy';reply='我的耳朵竖起来啦！发生了什么好事？';}
+ else if(/休息|音乐|声音|试试|可以做|小行动/.test(text)||chatMode==='action'){petTopic='action';reply=prior==='action'?'那就只留一分钟。想听声音，还是一起慢慢呼吸？':'先选一个很轻的小动作吧。你更想听声音，还是活动一下身体？';}
+ else if(/工作|考试|事情太多|压力|忙|面试/.test(text)){petTopic='pressure';reply=prior==='pressure'?'嗯，好几件事挤在一起了。哪一件让你最放不下？':'听起来今天被事情追着跑了。最让你累的是哪件事？';}
+ else if(/难过|低落|伤心|孤独/.test(text)){petTopic='sad';reply=prior==='sad'?'我还在听，不用急着好起来。你愿意多说一点吗？':'靠近你一点。是发生了什么事，还是说不清的难过？';}
+ else if(/谢谢|好多了|舒服多了/.test(text)){reply='蹭蹭你。想继续聊，还是一起安静待会儿？';}
+ else if(prior==='sad'){reply='我听着呢。刚才这件事里，最让你委屈的是什么？';petTopic='listening';}
+ else if(prior==='pressure'){reply='原来是这样。你现在更担心结果，还是已经有点撑累了？';petTopic='listening';}
+ else if(prior==='happy'){reply='想把这一刻藏进小口袋里。你当时第一个想告诉谁？';petTopic='listening';}
+ else if(/累|疲惫|撑/.test(text)){reply='那先歇一会儿吧，我陪着。今天有留时间给自己吗？';petTopic='rest';}
+ else reply=petTurn%2?'我把爪爪收好，认真听。你当时是什么感受？':'嗯，我在。接下来发生了什么？';
  if(typeof petMoment==='function')petMoment('chat');
- chatMessages.push({role:'user',text},{role:'assistant',text:reply});chatMessages=chatMessages.slice(-40);render();$('#chat-log').scrollTop=$('#chat-log').scrollHeight;$('#chat-input').focus();
+ const pair=[{role:'user',text},{role:'assistant',text:reply}];chatMessages.push(...pair);chatMessages=chatMessages.slice(-40);chatDraft='';
+ const log=$('#chat-log');log.insertAdjacentHTML('beforeend',pair.map(chatMessageHTML).join(''));while(log.children.length>41)log.children[1].remove();log.scrollTop=log.scrollHeight;
+ $('#chat-input').value='';$('#chat-input').focus({preventScroll:true});$('.chat-starters').hidden=true;
 }
 function bindJourney(){
  $$('[data-feeling]').forEach(b=>b.onclick=()=>{const f=b.dataset.feeling;selectedFeelings=selectedFeelings.includes(f)?selectedFeelings.filter(x=>x!==f):[...selectedFeelings,f];b.classList.toggle('selected',selectedFeelings.includes(f));b.setAttribute('aria-pressed',selectedFeelings.includes(f))});

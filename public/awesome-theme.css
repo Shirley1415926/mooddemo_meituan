@@ -86,3 +86,42 @@ body[data-page] footer{color:#65625b}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
 
 @media(max-width:800px){body[data-page] .companion-mode{display:flex;width:100%}body[data-page] .companion-mode button{flex:1;white-space:nowrap;padding:10px 12px}}
+/* A continuous conversation, with secondary controls out of the message flow. */
+body[data-page] .conversation-card{padding:0;overflow:visible;width:100%;max-width:760px}
+.conversation-header{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid #e1ded4}
+body[data-page] .conversation-header h2{font-size:18px;margin:0 0 4px}
+.conversation-header .small-note{margin:0;font-size:12px}
+.chat-avatar{display:block;width:42px;height:42px;flex:none;background-size:400% 200%;background-position:0 0;background-color:#eee4d4;border-radius:12px}
+.chat-options{margin-left:auto;position:relative}
+.chat-options>summary{cursor:pointer;padding:10px;font-size:13px;min-height:44px;display:flex;align-items:center;color:#655c4e}
+.chat-options-panel{position:absolute;right:0;top:46px;width:230px;background:#fffefa;border:1px solid #d7d2c5;padding:16px;border-radius:12px;z-index:4;box-shadow:0 8px 24px #29272315;display:grid;gap:8px}
+.chat-options-panel label{font-size:13px}
+body[data-page] .conversation-card .chat-log{height:320px;max-height:46dvh;min-height:220px;overflow-y:auto;overscroll-behavior:contain;padding:22px;display:flex;flex-direction:column;gap:18px;background:#f3f0e7;scrollbar-gutter:stable}
+.chat-message{display:flex;gap:10px;align-items:flex-start;flex:none;min-width:0;width:100%}
+.chat-message.user{justify-content:flex-end}
+body[data-page] .conversation-card .chat-bubble{width:auto;max-width:78%;margin:0;padding:12px 15px;background:#fffefa;border:1px solid #e6dfd2;border-radius:2px 14px 14px 14px;min-width:0;align-self:auto}
+body[data-page] .conversation-card .chat-bubble.user{background:#ead5c4;border-color:#dfc7b3;border-radius:14px 2px 14px 14px}
+body[data-page] .conversation-card .chat-bubble>span{font-size:12px;color:#706253;display:block;margin-bottom:4px}
+body[data-page] .conversation-card .chat-bubble p{font-size:15px;line-height:1.75;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:#39352d}
+.conversation-compose{padding:14px 22px 0;border-top:1px solid #e1ded4}
+body[data-page] .conversation-card .chat-form{display:flex;align-items:flex-end;gap:10px;margin:0;position:static}
+body[data-page] .conversation-card .chat-form textarea{min-height:58px;max-height:130px;font-size:16px;padding:12px;resize:vertical}
+.conversation-card .chat-form button{flex:none}
+.chat-compose-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;font-size:12px;color:#706253}
+body[data-page] .conversation-card #pet-small-action{width:auto;min-height:36px;margin:0!important;font-size:12px}
+body[data-page] .conversation-card .conversation-notice{margin:4px 22px 16px;font-size:12px;line-height:1.6}
+.conversation-card .chat-starters{margin:0 0 10px}
+.conversation-card .chat-starters[hidden]{display:none}
+@media(max-width:800px){
+ .conversation-header{padding:14px;gap:10px}
+ body[data-page] .conversation-header h2{font-size:17px}
+ body[data-page] .conversation-card .chat-log{padding:16px 12px;height:290px;max-height:40dvh;min-height:200px}
+ .chat-message{gap:7px}.chat-message .chat-avatar{width:32px;height:32px;border-radius:9px}
+ body[data-page] .conversation-card .chat-bubble{max-width:82%;padding:10px 12px}
+ body[data-page] .conversation-card .chat-bubble p{font-size:14px}
+ .conversation-compose{padding:12px 12px 0}.chat-compose-meta{align-items:flex-start;gap:4px}
+ .chat-compose-meta>span{max-width:130px;line-height:1.6}
+ body[data-page] .conversation-card .conversation-notice{margin:4px 12px 14px}
+ body[data-page] .conversation-card .chat-starters button{font-size:12px}
+ .chat-options-panel{width:210px}
+}
